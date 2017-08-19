@@ -11,9 +11,11 @@
 enum class opcode_type : int
 {
 
-    PUSH_I,PUSH_F,PUSH_C,PUSH_B,//スタックにpushする命令
+    PUSH_I,PUSH_F,PUSH_S,PUSH_B, //スタックにpushする命令
 
     ADD,SUB,MUL,DIV,MOD, //演算命令
+
+    OUTPUT, //出力命令
 
 };
 
@@ -24,7 +26,7 @@ typedef struct
 
     int i_value;
     double f_value;
-    char c_value;
+    char* s_value;
     bool b_value; //operation codeの値
 
 }vm_opcode;

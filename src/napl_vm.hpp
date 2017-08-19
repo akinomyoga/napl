@@ -4,7 +4,7 @@
 enum class stack_type : int
 {
 
-    INT,FLOAT,CHAR,BOOL,
+    INT,FLOAT,STRING,BOOL,
 
 };
 
@@ -16,7 +16,7 @@ typedef struct
     {
         int i_value;
         double f_value;
-        char c_value;
+        char* s_value;
         bool b_value;
     };
 
@@ -39,10 +39,14 @@ class NaplVM
 
         void push(int);
         void push(double);
-        void push(char);
+        void push(char *);
         void push(bool);
 
+        void print();
+
         vm_stack pop();
+
+        inline bool check_stack_type(stack_type,stack_type);
 
         void error(std::string);
 
