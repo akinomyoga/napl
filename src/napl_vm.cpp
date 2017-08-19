@@ -84,7 +84,6 @@ void NaplVM::push(double value)
 void NaplVM::push(char value)
 {
     vm_stack stack_push;
-
     stack_push.type=stack_type::CHAR;
     stack_push.c_value=value;
 
