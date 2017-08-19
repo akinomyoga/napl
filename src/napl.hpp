@@ -26,7 +26,7 @@ typedef struct
 
     int i_value;
     double f_value;
-    char* s_value;
+    std::string s_value;
     bool b_value; //operation codeの値
 
 }vm_opcode;

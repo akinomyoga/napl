@@ -16,9 +16,10 @@ typedef struct
     {
         int i_value;
         double f_value;
-        char* s_value;
         bool b_value;
     };
+
+    std::string s_value;
 
 }vm_stack;
 
@@ -39,7 +40,7 @@ class NaplVM
 
         void push(int);
         void push(double);
-        void push(char *);
+        void push(std::string);
         void push(bool);
 
         void print();

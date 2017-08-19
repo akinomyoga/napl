@@ -272,7 +272,7 @@ void NaplVM::push(double value)
     stack.push(stack_push);
 }
 
-void NaplVM::push(char* value)
+void NaplVM::push(std::string value)
 {
     vm_stack stack_push;
     stack_push.type=stack_type::STRING;
