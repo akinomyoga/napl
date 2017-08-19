@@ -1,12 +1,12 @@
 #ifndef NAPL_VM_HPP
 #define NAPL_VM_HPP
 
-typedef enum
+enum class stack_type : int
 {
 
     INT,FLOAT,CHAR,BOOL,
 
-}stack_type;
+};
 
 typedef struct
 {

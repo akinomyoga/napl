@@ -19,17 +19,17 @@ void NaplVM::exec_code()
         switch(opcode[code_counter].type)
         {
             //stackにpushする命令の処理
-            case PUSH_I: push<int>(opcode[code_counter].i_value); break;
-            case PUSH_F: push<double>(opcode[code_counter].f_value); break;
-            case PUSH_C: push<char>(opcode[code_counter].c_value); break;
-            case PUSH_B: push<bool>(opcode[code_counter].b_value); break;
+            case opcode_type::PUSH_I: push<int>(opcode[code_counter].i_value); break;
+            case opcode_type::PUSH_F: push<double>(opcode[code_counter].f_value); break;
+            case opcode_type::PUSH_C: push<char>(opcode[code_counter].c_value); break;
+            case opcode_type::PUSH_B: push<bool>(opcode[code_counter].b_value); break;
 
             //演算命令の処理
-            case ADD: add(); break;
-            case SUB: sub(); break;
-            case MUL: mul(); break;
-            case DIV: div(); break;
-            case MOD: mod(); break;
+            case opcode_type::ADD: add(); break;
+            case opcode_type::SUB: sub(); break;
+            case opcode_type::MUL: mul(); break;
+            case opcode_type::DIV: div(); break;
+            case opcode_type::MOD: mod(); break;
 
             default: break;
         }
@@ -69,22 +69,22 @@ void NaplVM::push(T value)
 
     if(typeid(T)==typeid(int))
     {
-        stack_push.type=INT;
+        stack_push.type=stack_type::INT;
         stack_push.i_value=value;
     }
     else if(typeid(T)==typeid(double))
     {
-        stack_push.type=FLOAT;
+        stack_push.type=stack_type::FLOAT;
         stack_push.f_value=value;
     }
     else if(typeid(T)==typeid(char))
     {
-        stack_push.type=CHAR;
+        stack_push.type=stack_type::CHAR;
         stack_push.c_value=value;
     }
     else if(typeid(T)==typeid(bool))
     {
-        stack_push.type=BOOL;
+        stack_push.type=stack_type::BOOL;
         stack_push.b_value=value;
     }
     else
@@ -99,14 +99,14 @@ void NaplVM::debug()
 {
     switch(opcode[code_counter].type)
     {
-        case PUSH_I: std::cout<<"[PUSH_I] : "<<opcode[code_counter].i_value<<std::endl; break;
-        case PUSH_F: std::cout<<"[PUSH_F] : "<<opcode[code_counter].f_value<<std::endl; break;
-        case PUSH_C: std::cout<<"[PUSH_C] : "<<opcode[code_counter].c_value<<std::endl; break;
-        case PUSH_B: std::cout<<"[PUSH_B] : "<<opcode[code_counter].b_value<<std::endl; break;
-        case ADD: std::cout<<"[ADD]"<<std::endl; break;
-        case SUB: std::cout<<"[SUB]"<<std::endl; break;
-        case MUL: std::cout<<"[MUL]"<<std::endl; break;
-        case DIV: std::cout<<"[DIV]"<<std::endl; break;
-        case MOD: std::cout<<"[MOD]"<<std::endl; break;
+        case opcode_type::PUSH_I: std::cout<<"[PUSH_I] : "<<opcode[code_counter].i_value<<std::endl; break;
+        case opcode_type::PUSH_F: std::cout<<"[PUSH_F] : "<<opcode[code_counter].f_value<<std::endl; break;
+        case opcode_type::PUSH_C: std::cout<<"[PUSH_C] : "<<opcode[code_counter].c_value<<std::endl; break;
+        case opcode_type::PUSH_B: std::cout<<"[PUSH_B] : "<<opcode[code_counter].b_value<<std::endl; break;
+        case opcode_type::ADD: std::cout<<"[ADD]"<<std::endl; break;
+        case opcode_type::SUB: std::cout<<"[SUB]"<<std::endl; break;
+        case opcode_type::MUL: std::cout<<"[MUL]"<<std::endl; break;
+        case opcode_type::DIV: std::cout<<"[DIV]"<<std::endl; break;
+        case opcode_type::MOD: std::cout<<"[MOD]"<<std::endl; break;
     }
 }

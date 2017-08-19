@@ -8,19 +8,19 @@
 #include <stack>
 #include <functional>
 
-typedef enum
+enum class opcode_type : int
 {
 
     PUSH_I,PUSH_F,PUSH_C,PUSH_B,//スタックにpushする命令
 
     ADD,SUB,MUL,DIV,MOD, //演算命令
 
-}vm_opcode_type;
+};
 
 typedef struct
 {
 
-    vm_opcode_type type; //operation codeの種類
+    opcode_type type; //operation codeの種類
 
     int i_value;
     double f_value;
