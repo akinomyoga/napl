@@ -19,10 +19,10 @@ void NaplVM::exec_code()
         switch(opcode[code_counter].type)
         {
             //stackにpushする命令の処理
-            case opcode_type::PUSH_I: push<int>(opcode[code_counter].i_value); break;
-            case opcode_type::PUSH_F: push<double>(opcode[code_counter].f_value); break;
-            case opcode_type::PUSH_C: push<char>(opcode[code_counter].c_value); break;
-            case opcode_type::PUSH_B: push<bool>(opcode[code_counter].b_value); break;
+            case opcode_type::PUSH_I: push(opcode[code_counter].i_value); break;
+            case opcode_type::PUSH_F: push(opcode[code_counter].f_value); break;
+            case opcode_type::PUSH_C: push(opcode[code_counter].c_value); break;
+            case opcode_type::PUSH_B: push(opcode[code_counter].b_value); break;
 
             //演算命令の処理
             case opcode_type::ADD: add(); break;
@@ -61,36 +61,42 @@ void NaplVM::mod()
 
 }
 
-template<typename T>
-
-void NaplVM::push(T value)
+void NaplVM::push(int value)
 {
     vm_stack stack_push;
 
-    if(typeid(T)==typeid(int))
-    {
-        stack_push.type=stack_type::INT;
-        stack_push.i_value=value;
-    }
-    else if(typeid(T)==typeid(double))
-    {
-        stack_push.type=stack_type::FLOAT;
-        stack_push.f_value=value;
-    }
-    else if(typeid(T)==typeid(char))
-    {
-        stack_push.type=stack_type::CHAR;
-        stack_push.c_value=value;
-    }
-    else if(typeid(T)==typeid(bool))
-    {
-        stack_push.type=stack_type::BOOL;
-        stack_push.b_value=value;
-    }
-    else
-    {
-        //不正な型のpushに対するエラー処理
-    }
+    stack_push.type=stack_type::INT;
+    stack_push.i_value=value;
+
+    stack.push(stack_push);
+}
+
+void NaplVM::push(double value)
+{
+    vm_stack stack_push;
+
+    stack_push.type=stack_type::FLOAT;
+    stack_push.f_value=value;
+
+    stack.push(stack_push);
+}
+
+void NaplVM::push(char value)
+{
+    vm_stack stack_push;
+
+    stack_push.type=stack_type::CHAR;
+    stack_push.c_value=value;
+
+    stack.push(stack_push);
+}
+
+void NaplVM::push(bool value)
+{
+    vm_stack stack_push;
+
+    stack_push.type=stack_type::BOOL;
+    stack_push.b_value=value;
 
     stack.push(stack_push);
 }

@@ -37,8 +37,10 @@ class NaplVM
         void div();
         void mod();
 
-        template<typename T>
-        void push(T);
+        void push(int);
+        void push(double);
+        void push(char);
+        void push(bool);
 
         void debug();
 
