@@ -42,6 +42,10 @@ class NaplVM
         void push(char);
         void push(bool);
 
+        vm_stack pop();
+
+        void error(std::string);
+
         void debug();
 
     public:

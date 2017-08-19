@@ -38,7 +38,7 @@ void NaplVM::exec_code()
 
 void NaplVM::add()
 {
-
+    
 }
 
 void NaplVM::sub()
@@ -100,6 +100,15 @@ void NaplVM::push(bool value)
     stack.push(stack_push);
 }
 
+vm_stack NaplVM::pop()
+{
+    vm_stack s=stack.top();
+
+    stack.pop();
+
+    return s;
+}
+
 void NaplVM::debug()
 {
     switch(opcode[code_counter].type)
@@ -114,4 +123,10 @@ void NaplVM::debug()
         case opcode_type::DIV: std::cout<<"[DIV]"<<std::endl; break;
         case opcode_type::MOD: std::cout<<"[MOD]"<<std::endl; break;
     }
+}
+
+void NaplVM::error(std::string msg)
+{
+    std::cerr<<msg<<std::endl;
+    exit(1);
 }
