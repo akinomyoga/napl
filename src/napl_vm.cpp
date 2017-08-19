@@ -48,10 +48,10 @@ void NaplVM::print()
 {
     switch(stack.top().type)
     {
-        case stack_type::INT: std::cout<<pop().i_value<<std::flush; break;
-        case stack_type::FLOAT: std::cout<<pop().f_value<<std::flush; break;
-        case stack_type::STRING: std::cout<<pop().s_value<<std::endl; break;
-        case stack_type::BOOL: std::cout<<pop().b_value<<std::flush; break;
+        case stack_type::INT: std::cout<<pop().i_value<<std::endl; break;
+        case stack_type::FLOAT: std::cout<<pop().f_value<<std::endl; break;
+        case stack_type::STRING: std::cout<<pop().s_value<<std::flush; break;
+        case stack_type::BOOL: std::cout<<(pop().b_value ? "true" : "false")<<std::endl; break;
     }
 }
 
