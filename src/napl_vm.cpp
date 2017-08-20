@@ -34,6 +34,10 @@ void NaplVM::exec_code()
             //出力
             case opcode_type::OUTPUT: print(); break;
 
+            //JUMP命令
+            case opcode_type::JUMP: jump(); break;
+            case opcode_type::JUMP_NOT: jump_not(); break;
+
             default: break;
         }
     }
@@ -42,6 +46,17 @@ void NaplVM::exec_code()
 inline bool NaplVM::check_stack_type(stack_type type_1,stack_type type_2)
 {
     return type_1==type_2;
+}
+
+inline void NaplVM::jump()
+{
+    code_counter=opcode[code_counter].i_value;
+}
+
+inline void NaplVM::jump_not()
+{
+    if(!pop().b_value)
+        code_counter=opcode[code_counter].i_value;
 }
 
 void NaplVM::print()

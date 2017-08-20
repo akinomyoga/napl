@@ -49,6 +49,9 @@ class NaplVM
 
         inline bool check_stack_type(stack_type,stack_type);
 
+        inline void jump();
+        inline void jump_not();
+
         void error(std::string);
 
         void debug();
