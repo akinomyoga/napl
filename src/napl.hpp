@@ -17,6 +17,8 @@ enum class opcode_type : int
 
     OUTPUT, //出力命令
 
+    JUMP,JUMP_NOT, //JUMP関連の命令
+
 };
 
 typedef struct
