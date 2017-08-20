@@ -1,13 +1,21 @@
 #include "napl.hpp"
 #include "napl_vm.hpp"
+#include "napl_gencode.hpp"
+
+//extern int yyparse();
+
+GenerateCode genc;
 
 int main(int argc,char **argv)
 {
-    std::vector<vm_opcode> naplvm_code;
-    naplvm_code.push_back({opcode_type::PUSH_B,0,0.0,"Hello world!",true});
-    naplvm_code.push_back({opcode_type::OUTPUT});
+    std::cout<<"napl programming language"<<std::endl;
 
-    NaplVM vm(naplvm_code);
+    genc.gencode(opcode_type::PUSH_I,10);
+    genc.gencode(opcode_type::PUSH_I,10);
+    genc.gencode(opcode_type::ADD);
+    genc.gencode(opcode_type::OUTPUT);
+
+    NaplVM vm(genc.get_code());
 
     vm.exec_code();
 

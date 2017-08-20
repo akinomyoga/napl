@@ -3,7 +3,7 @@
 
 #define VM_CODE_DEBUG
 
-NaplVM::NaplVM(std::vector<vm_opcode> &opcode)
+NaplVM::NaplVM(std::vector<vm_opcode>& opcode)
 {
     this->opcode=opcode;
 }
