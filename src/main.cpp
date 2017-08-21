@@ -8,7 +8,7 @@ GenerateCode genc;
 
 int main(int argc,char **argv)
 {
-    std::cout<<"napl programming language"<<std::endl;
+    std::cout<<"*****napl*****\n"<<std::endl;
 
     yyparse();
 
