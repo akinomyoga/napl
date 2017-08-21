@@ -57,6 +57,13 @@ class NaplVM
         inline void jump();
         inline void jump_not();
 
+        inline void eq();
+        inline void noteq();
+        inline void great();
+        inline void greateq();
+        inline void less();
+        inline void lesseq();
+
         void error(std::string);
 
         void debug();

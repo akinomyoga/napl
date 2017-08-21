@@ -20,6 +20,8 @@ enum class opcode_type : int
 
     JUMP,JUMP_NOT, //JUMP関連の命令
 
+    EQ,NOTEQ,GREAT,GREATEQ,LESS,LESSEQ, //比較命令
+
 };
 
 typedef struct

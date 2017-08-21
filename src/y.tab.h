@@ -50,7 +50,13 @@ extern int yydebug;
     Sub = 260,
     Mul = 261,
     Div = 262,
-    Mod = 263
+    Mod = 263,
+    Less = 264,
+    LessEq = 265,
+    Great = 266,
+    GreatEq = 267,
+    Eq = 268,
+    NotEq = 269
   };
 #endif
 /* Tokens.  */
@@ -60,6 +66,12 @@ extern int yydebug;
 #define Mul 261
 #define Div 262
 #define Mod 263
+#define Less 264
+#define LessEq 265
+#define Great 266
+#define GreatEq 267
+#define Eq 268
+#define NotEq 269
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -74,7 +86,7 @@ union YYSTYPE
     
     char *Str;
 
-#line 78 "y.tab.h" /* yacc.c:1909  */
+#line 90 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

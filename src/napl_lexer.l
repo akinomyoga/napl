@@ -22,6 +22,13 @@ other .
 "/" {return Div;}
 "%" {return Mod;}
 
+">"  {return Great;}
+">=" {return GreatEq;}
+"<"  {return Less;}
+"<=" {return LessEq;}
+"==" {return Eq;}
+"!=" {return NotEq;}
+
 {digit}+ {sscanf(yytext,"%d",&yylval.Int); return Num;}
 
 {other} {std::cerr<<"\'"<<yytext[0]<<"\' 不正な文字です"<<std::endl;}
