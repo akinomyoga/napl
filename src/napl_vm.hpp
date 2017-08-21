@@ -28,7 +28,10 @@ class NaplVM
     private:
 
         std::vector<vm_opcode> opcode;
+
         std::stack<vm_stack> stack;
+
+        std::map<opcode_type,void (NaplVM::*)()> function_map;
 
         int code_counter;
 
@@ -38,12 +41,14 @@ class NaplVM
         void div();
         void mod();
 
-        void push(int);
-        void push(double);
-        void push(std::string);
-        void push(bool);
+        inline void push(int);
+        inline void push(double);
+        inline void push(std::string);
+        inline void push(bool);
 
         void print();
+
+        void init_function_map();
 
         vm_stack pop();
 

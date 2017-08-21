@@ -6,6 +6,8 @@
 NaplVM::NaplVM(std::vector<vm_opcode>& opcode)
 {
     this->opcode=opcode;
+
+    init_function_map();
 }
 
 void NaplVM::exec_code()
@@ -24,23 +26,26 @@ void NaplVM::exec_code()
             case opcode_type::PUSH_S: push(opcode[code_counter].s_value); break;
             case opcode_type::PUSH_B: push(opcode[code_counter].b_value); break;
 
-            //演算命令の処理
-            case opcode_type::ADD: add(); break;
-            case opcode_type::SUB: sub(); break;
-            case opcode_type::MUL: mul(); break;
-            case opcode_type::DIV: div(); break;
-            case opcode_type::MOD: mod(); break;
+            default: //引数のない関数はfunction_mapから呼び出す
+            {
+                (this->*function_map[opcode[code_counter].type])();
 
-            //出力
-            case opcode_type::OUTPUT: print(); break;
-
-            //JUMP命令
-            case opcode_type::JUMP: jump(); break;
-            case opcode_type::JUMP_NOT: jump_not(); break;
-
-            default: break;
+                break;
+            }
         }
     }
+}
+
+void NaplVM::init_function_map()
+{
+    function_map[opcode_type::ADD]=&NaplVM::add;
+    function_map[opcode_type::SUB]=&NaplVM::sub;
+    function_map[opcode_type::MUL]=&NaplVM::mul;
+    function_map[opcode_type::DIV]=&NaplVM::div;
+    function_map[opcode_type::MOD]=&NaplVM::mod;
+    function_map[opcode_type::OUTPUT]=&NaplVM::print;
+    function_map[opcode_type::JUMP]=&NaplVM::jump;
+    function_map[opcode_type::JUMP_NOT]=&NaplVM::jump_not;
 }
 
 inline bool NaplVM::check_stack_type(stack_type type_1,stack_type type_2)
@@ -267,7 +272,7 @@ void NaplVM::mod()
     stack.push(result_stack);
 }
 
-void NaplVM::push(int value)
+inline void NaplVM::push(int value)
 {
     vm_stack stack_push;
 
@@ -277,7 +282,7 @@ void NaplVM::push(int value)
     stack.push(stack_push);
 }
 
-void NaplVM::push(double value)
+inline void NaplVM::push(double value)
 {
     vm_stack stack_push;
 
@@ -287,7 +292,7 @@ void NaplVM::push(double value)
     stack.push(stack_push);
 }
 
-void NaplVM::push(std::string value)
+inline void NaplVM::push(std::string value)
 {
     vm_stack stack_push;
     stack_push.type=stack_type::STRING;
@@ -296,7 +301,7 @@ void NaplVM::push(std::string value)
     stack.push(stack_push);
 }
 
-void NaplVM::push(bool value)
+inline void NaplVM::push(bool value)
 {
     vm_stack stack_push;
 

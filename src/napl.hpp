@@ -6,6 +6,7 @@
 #include <vector>
 #include <typeinfo>
 #include <stack>
+#include <map>
 #include <functional>
 
 enum class opcode_type : int
