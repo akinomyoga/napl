@@ -1,0 +1,226 @@
+文法
+
+    0 $accept: expr $end
+
+    1 expr: Num
+    2     | expr Add expr
+    3     | expr Sub expr
+    4     | expr Mul expr
+    5     | expr Div expr
+    6     | expr Mod expr
+    7     | '(' expr ')'
+
+
+出現位置の規則による終端
+
+$end (0) 0
+'(' (40) 7
+')' (41) 7
+error (256)
+Num (258) 1
+Add (259) 2
+Sub (260) 3
+Mul (261) 4
+Div (262) 5
+Mod (263) 6
+
+
+出現位置の規則による非終端
+
+$accept (11)
+    左辺: 0
+expr (12)
+    左辺: 1 2 3 4 5 6 7, 右辺: 0 2 3 4 5 6 7
+
+
+State 0
+
+    0 $accept: . expr $end
+
+    Num  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    expr  go to state 3
+
+
+State 1
+
+    1 expr: Num .
+
+    $default  reduce using rule 1 (expr)
+
+
+State 2
+
+    7 expr: '(' . expr ')'
+
+    Num  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    expr  go to state 4
+
+
+State 3
+
+    0 $accept: expr . $end
+    2 expr: expr . Add expr
+    3     | expr . Sub expr
+    4     | expr . Mul expr
+    5     | expr . Div expr
+    6     | expr . Mod expr
+
+    $end  shift, and go to state 5
+    Add   shift, and go to state 6
+    Sub   shift, and go to state 7
+    Mul   shift, and go to state 8
+    Div   shift, and go to state 9
+    Mod   shift, and go to state 10
+
+
+State 4
+
+    2 expr: expr . Add expr
+    3     | expr . Sub expr
+    4     | expr . Mul expr
+    5     | expr . Div expr
+    6     | expr . Mod expr
+    7     | '(' expr . ')'
+
+    Add  shift, and go to state 6
+    Sub  shift, and go to state 7
+    Mul  shift, and go to state 8
+    Div  shift, and go to state 9
+    Mod  shift, and go to state 10
+    ')'  shift, and go to state 11
+
+
+State 5
+
+    0 $accept: expr $end .
+
+    $default  accept
+
+
+State 6
+
+    2 expr: expr Add . expr
+
+    Num  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    expr  go to state 12
+
+
+State 7
+
+    3 expr: expr Sub . expr
+
+    Num  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    expr  go to state 13
+
+
+State 8
+
+    4 expr: expr Mul . expr
+
+    Num  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    expr  go to state 14
+
+
+State 9
+
+    5 expr: expr Div . expr
+
+    Num  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    expr  go to state 15
+
+
+State 10
+
+    6 expr: expr Mod . expr
+
+    Num  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    expr  go to state 16
+
+
+State 11
+
+    7 expr: '(' expr ')' .
+
+    $default  reduce using rule 7 (expr)
+
+
+State 12
+
+    2 expr: expr . Add expr
+    2     | expr Add expr .
+    3     | expr . Sub expr
+    4     | expr . Mul expr
+    5     | expr . Div expr
+    6     | expr . Mod expr
+
+    Mul  shift, and go to state 8
+    Div  shift, and go to state 9
+    Mod  shift, and go to state 10
+
+    $default  reduce using rule 2 (expr)
+
+
+State 13
+
+    2 expr: expr . Add expr
+    3     | expr . Sub expr
+    3     | expr Sub expr .
+    4     | expr . Mul expr
+    5     | expr . Div expr
+    6     | expr . Mod expr
+
+    Mul  shift, and go to state 8
+    Div  shift, and go to state 9
+    Mod  shift, and go to state 10
+
+    $default  reduce using rule 3 (expr)
+
+
+State 14
+
+    2 expr: expr . Add expr
+    3     | expr . Sub expr
+    4     | expr . Mul expr
+    4     | expr Mul expr .
+    5     | expr . Div expr
+    6     | expr . Mod expr
+
+    $default  reduce using rule 4 (expr)
+
+
+State 15
+
+    2 expr: expr . Add expr
+    3     | expr . Sub expr
+    4     | expr . Mul expr
+    5     | expr . Div expr
+    5     | expr Div expr .
+    6     | expr . Mod expr
+
+    $default  reduce using rule 5 (expr)
+
+
+State 16
+
+    2 expr: expr . Add expr
+    3     | expr . Sub expr
+    4     | expr . Mul expr
+    5     | expr . Div expr
+    6     | expr . Mod expr
+    6     | expr Mod expr .
+
+    $default  reduce using rule 6 (expr)
