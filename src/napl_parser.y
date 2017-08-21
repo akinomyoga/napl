@@ -30,6 +30,8 @@
 
 %%
 
+    start_expr : expr {genc.gencode(opcode_type::OUTPUT);}
+
     expr : Num {genc.gencode(opcode_type::PUSH_I,$<Int>1);}
          | expr Add expr {genc.gencode(opcode_type::ADD);}
          | expr Sub expr {genc.gencode(opcode_type::SUB);}

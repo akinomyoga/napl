@@ -26,12 +26,8 @@ void NaplVM::exec_code()
             case opcode_type::PUSH_S: push(opcode[code_counter].s_value); break;
             case opcode_type::PUSH_B: push(opcode[code_counter].b_value); break;
 
-            default: //引数のない関数はfunction_mapから呼び出す
-            {
-                (this->*function_map[opcode[code_counter].type])();
-
-                break;
-            }
+            //引数のない関数はfunction_mapから呼び出す
+            default: (this->*function_map[opcode[code_counter].type])();
         }
     }
 }
