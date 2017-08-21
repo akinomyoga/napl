@@ -64,9 +64,9 @@ inline void NaplVM::eq()
             int value=pop().i_value;
 
             if(stack.top().type==stack_type::INT)
-                push((value==pop().i_value));
+                push((pop().i_value==value));
             else if(stack.top().type==stack_type::FLOAT)
-                push((value==pop().f_value));
+                push((pop().f_value==value));
             break;
         }
         case stack_type::FLOAT:
@@ -74,9 +74,9 @@ inline void NaplVM::eq()
             float value=pop().i_value;
 
             if(stack.top().type==stack_type::INT)
-                stack,push((value==pop().i_value));
+                stack,push((pop().i_value==value));
             else if(stack.top().type==stack_type::FLOAT)
-                push((value==pop().f_value));
+                push((pop().f_value==value));
             break;
         }
         case stack_type::STRING: push((pop().s_value==pop().s_value)); break;
@@ -93,9 +93,9 @@ inline void NaplVM::noteq()
             int value=pop().i_value;
 
             if(stack.top().type==stack_type::INT)
-                push((value!=pop().i_value));
+                push((pop().i_value!=value));
             else if(stack.top().type==stack_type::FLOAT)
-                push((value!=pop().f_value));
+                push((pop().f_value!=value));
             break;
         }
         case stack_type::FLOAT:
@@ -103,9 +103,9 @@ inline void NaplVM::noteq()
             float value=pop().i_value;
 
             if(stack.top().type==stack_type::INT)
-                stack,push((value!=pop().i_value));
+                push((pop().i_value!=value));
             else if(stack.top().type==stack_type::FLOAT)
-                push((value!=pop().f_value));
+                push((pop().f_value!=value));
             break;
         }
         case stack_type::STRING: push((pop().s_value!=pop().s_value)); break;
@@ -120,18 +120,18 @@ inline void NaplVM::great()
         int value=pop().i_value;
 
         if(stack.top().type==stack_type::INT)
-            push((value>pop().i_value));
+            push((pop().i_value>value));
         else if(stack.top().type==stack_type::FLOAT)
-            push((value>pop().f_value));
+            push((pop().f_value>value));
     }
     else if(stack.top().type==stack_type::FLOAT)
     {
         float value=pop().i_value;
 
         if(stack.top().type==stack_type::INT)
-            stack,push((value>pop().i_value));
+            stack,push((pop().i_value>value));
         else if(stack.top().type==stack_type::FLOAT)
-            push((value>pop().f_value));
+            push((pop().f_value>value));
     }
 }
 
@@ -142,18 +142,18 @@ inline void NaplVM::greateq()
         int value=pop().i_value;
 
         if(stack.top().type==stack_type::INT)
-            push((value>=pop().i_value));
+            push((pop().i_value>=value));
         else if(stack.top().type==stack_type::FLOAT)
-            push((value>=pop().f_value));
+            push((pop().f_value>=value));
     }
     else if(stack.top().type==stack_type::FLOAT)
     {
         float value=pop().i_value;
 
         if(stack.top().type==stack_type::INT)
-            stack,push((value>=pop().i_value));
+            push((pop().i_value>=value));
         else if(stack.top().type==stack_type::FLOAT)
-            push((value>=pop().f_value));
+            push((pop().f_value>=value));
     }
 }
 
@@ -164,18 +164,18 @@ inline void NaplVM::less()
         int value=pop().i_value;
 
         if(stack.top().type==stack_type::INT)
-            push((value<pop().i_value));
+            push((pop().i_value<value));
         else if(stack.top().type==stack_type::FLOAT)
-            push((value<pop().f_value));
+            push((pop().f_value<value));
     }
     else if(stack.top().type==stack_type::FLOAT)
     {
         float value=pop().i_value;
 
         if(stack.top().type==stack_type::INT)
-            push((value<pop().i_value));
+            push((pop().i_value<value));
         else if(stack.top().type==stack_type::FLOAT)
-            push((value<pop().f_value));
+            push((pop().f_value<value));
     }
 }
 
@@ -186,18 +186,18 @@ inline void NaplVM::lesseq()
         int value=pop().i_value;
 
         if(stack.top().type==stack_type::INT)
-            push((value<=pop().i_value));
+            push((pop().i_value<=value));
         else if(stack.top().type==stack_type::FLOAT)
-            push((value<=pop().f_value));
+            push((pop().f_value<=value));
     }
     else if(stack.top().type==stack_type::FLOAT)
     {
         float value=pop().i_value;
 
         if(stack.top().type==stack_type::INT)
-            push((value<=pop().i_value));
+            push((pop().i_value<=value));
         else if(stack.top().type==stack_type::FLOAT)
-            push((value<=pop().f_value));
+            push((pop().f_value<=value));
     }
 }
 
@@ -484,6 +484,16 @@ void NaplVM::debug()
         case opcode_type::MOD: std::cout<<"[MOD]"<<std::endl; break;
 
         case opcode_type::OUTPUT: std::cout<<"[OUTPUT]"<<std::endl; break;
+
+        case opcode_type::JUMP: std::cout<<"[JUMP] : "<<opcode[code_counter].i_value<<std::endl; break;
+        case opcode_type::JUMP_NOT: std::cout<<"[JUMP_NOT] : "<<opcode[code_counter].i_value<<std::endl; break;
+        
+        case opcode_type::EQ: std::cout<<"[EQ]"<<std::endl; break;
+        case opcode_type::NOTEQ: std::cout<<"[NOTEQ]"<<std::endl; break;
+        case opcode_type::LESS: std::cout<<"[LESS]"<<std::endl; break;
+        case opcode_type::LESSEQ: std::cout<<"[LESSEQ]"<<std::endl; break;
+        case opcode_type::GREAT: std::cout<<"[GREAT]"<<std::endl; break;
+        case opcode_type::GREATEQ: std::cout<<"[GREATEQ]"<<std::endl; break;
     }
 }
 
