@@ -17,7 +17,7 @@ int main(int argc,char **argv)
     }
     else if(argc==2)
     {
-        if((yyin=fopen(argv[1],"r"))==NULL)
+        if((yyin=fopen(argv[1],"r"))==nullptr)
         {
             std::cerr<<argv[1]<<": ファイルをオープンできません"<<std::endl;
             return -1;
