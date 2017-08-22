@@ -20,33 +20,66 @@
     double Dbl;
     
     char *Str;
+
+    opcode_type type;
 }
 
-%token <Int> Num
+%token <Int> Num Type Com
+%token <Str> Id
 %token Add Sub Mul Div Mod
-%token Less LessEq Great GreatEq Eq NotEq
+%token Print
 
-%left Less LessEq Great GreatEq Eq NotEq
+%left Com
 %left Add Sub
 %left Mul Div Mod
 
+/*
+*********文法*********
+
+    #変数定義
+        
+        Type Id -> 変数定義
+        Id Id   -> 構造体などの定義
+
+    #式
+        
+        式 演算子 式
+        Id = 式 -> 代入
+        ( 式 )
+        num    -> 整数
+        rnum   -> 小数
+        string -> 文字列
+        true || false -> 論理
+
+    #組み込み関数
+
+        print -> 出力
+*/
+
 %%
 
-    start_expr : expr {genc.gencode(opcode_type::OUTPUT);}
+program : global {genc.gencode(opcode_type::EXIT);}
 
-    expr : Num {genc.gencode(opcode_type::PUSH_I,$<Int>1);}
-         | expr Add expr {genc.gencode(opcode_type::ADD);}
-         | expr Sub expr {genc.gencode(opcode_type::SUB);}
-         | expr Mul expr {genc.gencode(opcode_type::MUL);}
-         | expr Div expr {genc.gencode(opcode_type::DIV);}
-         | expr Mod expr {genc.gencode(opcode_type::MOD);}
-         | '(' expr ')'
-         | expr Eq expr {genc.gencode(opcode_type::EQ);}
-         | expr NotEq expr {genc.gencode(opcode_type::NOTEQ);}
-         | expr Great expr {genc.gencode(opcode_type::GREAT);}
-         | expr GreatEq expr {genc.gencode(opcode_type::GREATEQ);}
-         | expr Less expr {genc.gencode(opcode_type::LESS);}
-         | expr LessEq expr {genc.gencode(opcode_type::LESSEQ);}
-         ;
+global : 
+       | global statement_list
+       | error '\n' {yyerrok;}
+       ;
+
+statement_list : statement_list '\n' statement
+               | statement
+               ;
+
+statement : Print expr {genc.gencode(opcode_type::OUTPUT);}
+          ;
+
+expr : expr Add expr {genc.gencode(opcode_type::ADD);}
+     | expr Sub expr {genc.gencode(opcode_type::SUB);}
+     | expr Mul expr {genc.gencode(opcode_type::MUL);}
+     | expr Div expr {genc.gencode(opcode_type::DIV);}
+     | expr Mod expr {genc.gencode(opcode_type::MOD);}
+     | expr Com expr {genc.gencode($<type>2);}
+     | '(' expr ')'
+     | Num           {genc.gencode(opcode_type::PUSH_I,$<Int>1);}
+     ;
 
 %%

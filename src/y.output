@@ -1,510 +1,376 @@
+Terminals unused in grammar
+
+   Type
+   Id
+
+
 文法
 
-    0 $accept: start_expr $end
+    0 $accept: program $end
 
-    1 start_expr: expr
+    1 program: global
 
-    2 expr: Num
-    3     | expr Add expr
-    4     | expr Sub expr
-    5     | expr Mul expr
-    6     | expr Div expr
-    7     | expr Mod expr
-    8     | '(' expr ')'
-    9     | expr Eq expr
-   10     | expr NotEq expr
-   11     | expr Great expr
-   12     | expr GreatEq expr
-   13     | expr Less expr
-   14     | expr LessEq expr
+    2 global: %empty
+    3       | global statement_list
+    4       | error '\n'
+
+    5 statement_list: statement_list '\n' statement
+    6               | statement
+
+    7 statement: Print expr
+
+    8 expr: expr Add expr
+    9     | expr Sub expr
+   10     | expr Mul expr
+   11     | expr Div expr
+   12     | expr Mod expr
+   13     | expr Com expr
+   14     | '(' expr ')'
+   15     | Num
 
 
 出現位置の規則による終端
 
 $end (0) 0
-'(' (40) 8
-')' (41) 8
-error (256)
-Num (258) 2
-Add (259) 3
-Sub (260) 4
-Mul (261) 5
-Div (262) 6
-Mod (263) 7
-Less (264) 13
-LessEq (265) 14
-Great (266) 11
-GreatEq (267) 12
-Eq (268) 9
-NotEq (269) 10
+'\n' (10) 4 5
+'(' (40) 14
+')' (41) 14
+error (256) 4
+Num (258) 15
+Type (259)
+Com (260) 13
+Id (261)
+Add (262) 8
+Sub (263) 9
+Mul (264) 10
+Div (265) 11
+Mod (266) 12
+Print (267) 7
 
 
 出現位置の規則による非終端
 
-$accept (17)
+$accept (16)
     左辺: 0
-start_expr (18)
+program (17)
     左辺: 1, 右辺: 0
-expr (19)
-    左辺: 2 3 4 5 6 7 8 9 10 11 12 13 14, 右辺: 1 3 4 5 6 7 8 9
-    10 11 12 13 14
+global (18)
+    左辺: 2 3 4, 右辺: 1 3
+statement_list (19)
+    左辺: 5 6, 右辺: 3 5
+statement (20)
+    左辺: 7, 右辺: 5 6
+expr (21)
+    左辺: 8 9 10 11 12 13 14 15, 右辺: 7 8 9 10 11 12 13 14
 
 
 State 0
 
-    0 $accept: . start_expr $end
+    0 $accept: . program $end
 
-    Num  shift, and go to state 1
-    '('  shift, and go to state 2
+    error  shift, and go to state 1
 
-    start_expr  go to state 3
-    expr        go to state 4
+    $end   reduce using rule 2 (global)
+    Print  reduce using rule 2 (global)
+
+    program  go to state 2
+    global   go to state 3
 
 
 State 1
 
-    2 expr: Num .
+    4 global: error . '\n'
 
-    $default  reduce using rule 2 (expr)
+    '\n'  shift, and go to state 4
 
 
 State 2
 
-    8 expr: '(' . expr ')'
+    0 $accept: program . $end
 
-    Num  shift, and go to state 1
-    '('  shift, and go to state 2
-
-    expr  go to state 5
+    $end  shift, and go to state 5
 
 
 State 3
 
-    0 $accept: start_expr . $end
+    1 program: global .
+    3 global: global . statement_list
 
-    $end  shift, and go to state 6
+    Print  shift, and go to state 6
+
+    $default  reduce using rule 1 (program)
+
+    statement_list  go to state 7
+    statement       go to state 8
 
 
 State 4
 
-    1 start_expr: expr .
-    3 expr: expr . Add expr
-    4     | expr . Sub expr
-    5     | expr . Mul expr
-    6     | expr . Div expr
-    7     | expr . Mod expr
-    9     | expr . Eq expr
-   10     | expr . NotEq expr
-   11     | expr . Great expr
-   12     | expr . GreatEq expr
-   13     | expr . Less expr
-   14     | expr . LessEq expr
+    4 global: error '\n' .
 
-    Add      shift, and go to state 7
-    Sub      shift, and go to state 8
-    Mul      shift, and go to state 9
-    Div      shift, and go to state 10
-    Mod      shift, and go to state 11
-    Less     shift, and go to state 12
-    LessEq   shift, and go to state 13
-    Great    shift, and go to state 14
-    GreatEq  shift, and go to state 15
-    Eq       shift, and go to state 16
-    NotEq    shift, and go to state 17
-
-    $default  reduce using rule 1 (start_expr)
+    $default  reduce using rule 4 (global)
 
 
 State 5
 
-    3 expr: expr . Add expr
-    4     | expr . Sub expr
-    5     | expr . Mul expr
-    6     | expr . Div expr
-    7     | expr . Mod expr
-    8     | '(' expr . ')'
-    9     | expr . Eq expr
-   10     | expr . NotEq expr
-   11     | expr . Great expr
-   12     | expr . GreatEq expr
-   13     | expr . Less expr
-   14     | expr . LessEq expr
-
-    Add      shift, and go to state 7
-    Sub      shift, and go to state 8
-    Mul      shift, and go to state 9
-    Div      shift, and go to state 10
-    Mod      shift, and go to state 11
-    Less     shift, and go to state 12
-    LessEq   shift, and go to state 13
-    Great    shift, and go to state 14
-    GreatEq  shift, and go to state 15
-    Eq       shift, and go to state 16
-    NotEq    shift, and go to state 17
-    ')'      shift, and go to state 18
-
-
-State 6
-
-    0 $accept: start_expr $end .
+    0 $accept: program $end .
 
     $default  accept
 
 
+State 6
+
+    7 statement: Print . expr
+
+    Num  shift, and go to state 9
+    '('  shift, and go to state 10
+
+    expr  go to state 11
+
+
 State 7
 
-    3 expr: expr Add . expr
+    3 global: global statement_list .
+    5 statement_list: statement_list . '\n' statement
 
-    Num  shift, and go to state 1
-    '('  shift, and go to state 2
+    '\n'  shift, and go to state 12
 
-    expr  go to state 19
+    $default  reduce using rule 3 (global)
 
 
 State 8
 
-    4 expr: expr Sub . expr
+    6 statement_list: statement .
 
-    Num  shift, and go to state 1
-    '('  shift, and go to state 2
-
-    expr  go to state 20
+    $default  reduce using rule 6 (statement_list)
 
 
 State 9
 
-    5 expr: expr Mul . expr
+   15 expr: Num .
 
-    Num  shift, and go to state 1
-    '('  shift, and go to state 2
-
-    expr  go to state 21
+    $default  reduce using rule 15 (expr)
 
 
 State 10
 
-    6 expr: expr Div . expr
+   14 expr: '(' . expr ')'
 
-    Num  shift, and go to state 1
-    '('  shift, and go to state 2
+    Num  shift, and go to state 9
+    '('  shift, and go to state 10
 
-    expr  go to state 22
+    expr  go to state 13
 
 
 State 11
 
-    7 expr: expr Mod . expr
+    7 statement: Print expr .
+    8 expr: expr . Add expr
+    9     | expr . Sub expr
+   10     | expr . Mul expr
+   11     | expr . Div expr
+   12     | expr . Mod expr
+   13     | expr . Com expr
 
-    Num  shift, and go to state 1
-    '('  shift, and go to state 2
+    Com  shift, and go to state 14
+    Add  shift, and go to state 15
+    Sub  shift, and go to state 16
+    Mul  shift, and go to state 17
+    Div  shift, and go to state 18
+    Mod  shift, and go to state 19
 
-    expr  go to state 23
+    $default  reduce using rule 7 (statement)
 
 
 State 12
 
-   13 expr: expr Less . expr
+    5 statement_list: statement_list '\n' . statement
 
-    Num  shift, and go to state 1
-    '('  shift, and go to state 2
+    Print  shift, and go to state 6
 
-    expr  go to state 24
+    statement  go to state 20
 
 
 State 13
 
-   14 expr: expr LessEq . expr
+    8 expr: expr . Add expr
+    9     | expr . Sub expr
+   10     | expr . Mul expr
+   11     | expr . Div expr
+   12     | expr . Mod expr
+   13     | expr . Com expr
+   14     | '(' expr . ')'
 
-    Num  shift, and go to state 1
-    '('  shift, and go to state 2
-
-    expr  go to state 25
+    Com  shift, and go to state 14
+    Add  shift, and go to state 15
+    Sub  shift, and go to state 16
+    Mul  shift, and go to state 17
+    Div  shift, and go to state 18
+    Mod  shift, and go to state 19
+    ')'  shift, and go to state 21
 
 
 State 14
 
-   11 expr: expr Great . expr
+   13 expr: expr Com . expr
 
-    Num  shift, and go to state 1
-    '('  shift, and go to state 2
+    Num  shift, and go to state 9
+    '('  shift, and go to state 10
 
-    expr  go to state 26
+    expr  go to state 22
 
 
 State 15
 
-   12 expr: expr GreatEq . expr
+    8 expr: expr Add . expr
 
-    Num  shift, and go to state 1
-    '('  shift, and go to state 2
+    Num  shift, and go to state 9
+    '('  shift, and go to state 10
 
-    expr  go to state 27
+    expr  go to state 23
 
 
 State 16
 
-    9 expr: expr Eq . expr
+    9 expr: expr Sub . expr
 
-    Num  shift, and go to state 1
-    '('  shift, and go to state 2
+    Num  shift, and go to state 9
+    '('  shift, and go to state 10
 
-    expr  go to state 28
+    expr  go to state 24
 
 
 State 17
 
-   10 expr: expr NotEq . expr
+   10 expr: expr Mul . expr
 
-    Num  shift, and go to state 1
-    '('  shift, and go to state 2
+    Num  shift, and go to state 9
+    '('  shift, and go to state 10
 
-    expr  go to state 29
+    expr  go to state 25
 
 
 State 18
 
-    8 expr: '(' expr ')' .
+   11 expr: expr Div . expr
 
-    $default  reduce using rule 8 (expr)
+    Num  shift, and go to state 9
+    '('  shift, and go to state 10
+
+    expr  go to state 26
 
 
 State 19
 
-    3 expr: expr . Add expr
-    3     | expr Add expr .
-    4     | expr . Sub expr
-    5     | expr . Mul expr
-    6     | expr . Div expr
-    7     | expr . Mod expr
-    9     | expr . Eq expr
-   10     | expr . NotEq expr
-   11     | expr . Great expr
-   12     | expr . GreatEq expr
-   13     | expr . Less expr
-   14     | expr . LessEq expr
+   12 expr: expr Mod . expr
 
-    Mul  shift, and go to state 9
-    Div  shift, and go to state 10
-    Mod  shift, and go to state 11
+    Num  shift, and go to state 9
+    '('  shift, and go to state 10
 
-    $default  reduce using rule 3 (expr)
+    expr  go to state 27
 
 
 State 20
 
-    3 expr: expr . Add expr
-    4     | expr . Sub expr
-    4     | expr Sub expr .
-    5     | expr . Mul expr
-    6     | expr . Div expr
-    7     | expr . Mod expr
-    9     | expr . Eq expr
-   10     | expr . NotEq expr
-   11     | expr . Great expr
-   12     | expr . GreatEq expr
-   13     | expr . Less expr
-   14     | expr . LessEq expr
+    5 statement_list: statement_list '\n' statement .
 
-    Mul  shift, and go to state 9
-    Div  shift, and go to state 10
-    Mod  shift, and go to state 11
-
-    $default  reduce using rule 4 (expr)
+    $default  reduce using rule 5 (statement_list)
 
 
 State 21
 
-    3 expr: expr . Add expr
-    4     | expr . Sub expr
-    5     | expr . Mul expr
-    5     | expr Mul expr .
-    6     | expr . Div expr
-    7     | expr . Mod expr
-    9     | expr . Eq expr
-   10     | expr . NotEq expr
-   11     | expr . Great expr
-   12     | expr . GreatEq expr
-   13     | expr . Less expr
-   14     | expr . LessEq expr
-
-    $default  reduce using rule 5 (expr)
-
-
-State 22
-
-    3 expr: expr . Add expr
-    4     | expr . Sub expr
-    5     | expr . Mul expr
-    6     | expr . Div expr
-    6     | expr Div expr .
-    7     | expr . Mod expr
-    9     | expr . Eq expr
-   10     | expr . NotEq expr
-   11     | expr . Great expr
-   12     | expr . GreatEq expr
-   13     | expr . Less expr
-   14     | expr . LessEq expr
-
-    $default  reduce using rule 6 (expr)
-
-
-State 23
-
-    3 expr: expr . Add expr
-    4     | expr . Sub expr
-    5     | expr . Mul expr
-    6     | expr . Div expr
-    7     | expr . Mod expr
-    7     | expr Mod expr .
-    9     | expr . Eq expr
-   10     | expr . NotEq expr
-   11     | expr . Great expr
-   12     | expr . GreatEq expr
-   13     | expr . Less expr
-   14     | expr . LessEq expr
-
-    $default  reduce using rule 7 (expr)
-
-
-State 24
-
-    3 expr: expr . Add expr
-    4     | expr . Sub expr
-    5     | expr . Mul expr
-    6     | expr . Div expr
-    7     | expr . Mod expr
-    9     | expr . Eq expr
-   10     | expr . NotEq expr
-   11     | expr . Great expr
-   12     | expr . GreatEq expr
-   13     | expr . Less expr
-   13     | expr Less expr .
-   14     | expr . LessEq expr
-
-    Add  shift, and go to state 7
-    Sub  shift, and go to state 8
-    Mul  shift, and go to state 9
-    Div  shift, and go to state 10
-    Mod  shift, and go to state 11
-
-    $default  reduce using rule 13 (expr)
-
-
-State 25
-
-    3 expr: expr . Add expr
-    4     | expr . Sub expr
-    5     | expr . Mul expr
-    6     | expr . Div expr
-    7     | expr . Mod expr
-    9     | expr . Eq expr
-   10     | expr . NotEq expr
-   11     | expr . Great expr
-   12     | expr . GreatEq expr
-   13     | expr . Less expr
-   14     | expr . LessEq expr
-   14     | expr LessEq expr .
-
-    Add  shift, and go to state 7
-    Sub  shift, and go to state 8
-    Mul  shift, and go to state 9
-    Div  shift, and go to state 10
-    Mod  shift, and go to state 11
+   14 expr: '(' expr ')' .
 
     $default  reduce using rule 14 (expr)
 
 
+State 22
+
+    8 expr: expr . Add expr
+    9     | expr . Sub expr
+   10     | expr . Mul expr
+   11     | expr . Div expr
+   12     | expr . Mod expr
+   13     | expr . Com expr
+   13     | expr Com expr .
+
+    Add  shift, and go to state 15
+    Sub  shift, and go to state 16
+    Mul  shift, and go to state 17
+    Div  shift, and go to state 18
+    Mod  shift, and go to state 19
+
+    $default  reduce using rule 13 (expr)
+
+
+State 23
+
+    8 expr: expr . Add expr
+    8     | expr Add expr .
+    9     | expr . Sub expr
+   10     | expr . Mul expr
+   11     | expr . Div expr
+   12     | expr . Mod expr
+   13     | expr . Com expr
+
+    Mul  shift, and go to state 17
+    Div  shift, and go to state 18
+    Mod  shift, and go to state 19
+
+    $default  reduce using rule 8 (expr)
+
+
+State 24
+
+    8 expr: expr . Add expr
+    9     | expr . Sub expr
+    9     | expr Sub expr .
+   10     | expr . Mul expr
+   11     | expr . Div expr
+   12     | expr . Mod expr
+   13     | expr . Com expr
+
+    Mul  shift, and go to state 17
+    Div  shift, and go to state 18
+    Mod  shift, and go to state 19
+
+    $default  reduce using rule 9 (expr)
+
+
+State 25
+
+    8 expr: expr . Add expr
+    9     | expr . Sub expr
+   10     | expr . Mul expr
+   10     | expr Mul expr .
+   11     | expr . Div expr
+   12     | expr . Mod expr
+   13     | expr . Com expr
+
+    $default  reduce using rule 10 (expr)
+
+
 State 26
 
-    3 expr: expr . Add expr
-    4     | expr . Sub expr
-    5     | expr . Mul expr
-    6     | expr . Div expr
-    7     | expr . Mod expr
-    9     | expr . Eq expr
-   10     | expr . NotEq expr
-   11     | expr . Great expr
-   11     | expr Great expr .
-   12     | expr . GreatEq expr
-   13     | expr . Less expr
-   14     | expr . LessEq expr
-
-    Add  shift, and go to state 7
-    Sub  shift, and go to state 8
-    Mul  shift, and go to state 9
-    Div  shift, and go to state 10
-    Mod  shift, and go to state 11
+    8 expr: expr . Add expr
+    9     | expr . Sub expr
+   10     | expr . Mul expr
+   11     | expr . Div expr
+   11     | expr Div expr .
+   12     | expr . Mod expr
+   13     | expr . Com expr
 
     $default  reduce using rule 11 (expr)
 
 
 State 27
 
-    3 expr: expr . Add expr
-    4     | expr . Sub expr
-    5     | expr . Mul expr
-    6     | expr . Div expr
-    7     | expr . Mod expr
-    9     | expr . Eq expr
-   10     | expr . NotEq expr
-   11     | expr . Great expr
-   12     | expr . GreatEq expr
-   12     | expr GreatEq expr .
-   13     | expr . Less expr
-   14     | expr . LessEq expr
-
-    Add  shift, and go to state 7
-    Sub  shift, and go to state 8
-    Mul  shift, and go to state 9
-    Div  shift, and go to state 10
-    Mod  shift, and go to state 11
+    8 expr: expr . Add expr
+    9     | expr . Sub expr
+   10     | expr . Mul expr
+   11     | expr . Div expr
+   12     | expr . Mod expr
+   12     | expr Mod expr .
+   13     | expr . Com expr
 
     $default  reduce using rule 12 (expr)
-
-
-State 28
-
-    3 expr: expr . Add expr
-    4     | expr . Sub expr
-    5     | expr . Mul expr
-    6     | expr . Div expr
-    7     | expr . Mod expr
-    9     | expr . Eq expr
-    9     | expr Eq expr .
-   10     | expr . NotEq expr
-   11     | expr . Great expr
-   12     | expr . GreatEq expr
-   13     | expr . Less expr
-   14     | expr . LessEq expr
-
-    Add  shift, and go to state 7
-    Sub  shift, and go to state 8
-    Mul  shift, and go to state 9
-    Div  shift, and go to state 10
-    Mod  shift, and go to state 11
-
-    $default  reduce using rule 9 (expr)
-
-
-State 29
-
-    3 expr: expr . Add expr
-    4     | expr . Sub expr
-    5     | expr . Mul expr
-    6     | expr . Div expr
-    7     | expr . Mod expr
-    9     | expr . Eq expr
-   10     | expr . NotEq expr
-   10     | expr NotEq expr .
-   11     | expr . Great expr
-   12     | expr . GreatEq expr
-   13     | expr . Less expr
-   14     | expr . LessEq expr
-
-    Add  shift, and go to state 7
-    Sub  shift, and go to state 8
-    Mul  shift, and go to state 9
-    Div  shift, and go to state 10
-    Mod  shift, and go to state 11
-
-    $default  reduce using rule 10 (expr)

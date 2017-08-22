@@ -22,6 +22,21 @@ enum class opcode_type : int
 
     EQ,NOTEQ,GREAT,GREATEQ,LESS,LESSEQ, //比較命令
 
+    EXIT, //終了命令
+
+};
+
+enum class variable_type : int
+{
+
+    INT,
+
+    FLOAT,
+
+    STRING,
+
+    BOOL,
+
 };
 
 typedef struct

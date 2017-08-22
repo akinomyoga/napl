@@ -46,32 +46,28 @@ extern int yydebug;
   enum yytokentype
   {
     Num = 258,
-    Add = 259,
-    Sub = 260,
-    Mul = 261,
-    Div = 262,
-    Mod = 263,
-    Less = 264,
-    LessEq = 265,
-    Great = 266,
-    GreatEq = 267,
-    Eq = 268,
-    NotEq = 269
+    Type = 259,
+    Com = 260,
+    Id = 261,
+    Add = 262,
+    Sub = 263,
+    Mul = 264,
+    Div = 265,
+    Mod = 266,
+    Print = 267
   };
 #endif
 /* Tokens.  */
 #define Num 258
-#define Add 259
-#define Sub 260
-#define Mul 261
-#define Div 262
-#define Mod 263
-#define Less 264
-#define LessEq 265
-#define Great 266
-#define GreatEq 267
-#define Eq 268
-#define NotEq 269
+#define Type 259
+#define Com 260
+#define Id 261
+#define Add 262
+#define Sub 263
+#define Mul 264
+#define Div 265
+#define Mod 266
+#define Print 267
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -86,7 +82,9 @@ union YYSTYPE
     
     char *Str;
 
-#line 90 "y.tab.h" /* yacc.c:1909  */
+    opcode_type type;
+
+#line 88 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

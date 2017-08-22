@@ -64,6 +64,8 @@ class NaplVM
         inline void less();
         inline void lesseq();
 
+        inline void exit_vm();
+
         void error(std::string);
 
         void debug();

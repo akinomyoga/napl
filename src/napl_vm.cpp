@@ -48,11 +48,17 @@ void NaplVM::init_function_map()
     function_map[opcode_type::GREATEQ]=&NaplVM::greateq;
     function_map[opcode_type::LESS]=&NaplVM::less;
     function_map[opcode_type::LESSEQ]=&NaplVM::lesseq;
+    function_map[opcode_type::EXIT]=&NaplVM::exit_vm;
 }
 
 inline bool NaplVM::check_stack_type(stack_type type_1,stack_type type_2)
 {
     return type_1==type_2;
+}
+
+inline void NaplVM::exit_vm()
+{
+    exit(1);
 }
 
 inline void NaplVM::eq()
