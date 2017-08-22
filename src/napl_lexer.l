@@ -80,7 +80,7 @@ other .
             }
 
 "true"      {return True;}
-s
+
 "false"     {return False;}
 
 "print"     {return Print;}
