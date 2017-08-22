@@ -41,6 +41,16 @@ void GenerateCode::gencode(opcode_type type,double f_value)
     opcode.push_back(op);
 }
 
+void GenerateCode::gencode(opcode_type type,char* s_value)
+{
+    vm_opcode op;
+
+    op.type=type;
+    op.s_value=s_value;
+
+    opcode.push_back(op);
+}
+
 void GenerateCode::gencode(opcode_type type,std::string s_value)
 {
     vm_opcode op;

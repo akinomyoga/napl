@@ -25,8 +25,10 @@
 }
 
 %token <Int> Num Type Com
-%token <Str> Id
+%token <Dbl> RNum
+%token <Str> Id String
 %token Add Sub Mul Div Mod
+%token True False
 %token Print
 
 %left Com
@@ -80,6 +82,10 @@ expr : expr Add expr {genc.gencode(opcode_type::ADD);}
      | expr Com expr {genc.gencode($<type>2);}
      | '(' expr ')'
      | Num           {genc.gencode(opcode_type::PUSH_I,$<Int>1);}
+     | RNum          {genc.gencode(opcode_type::PUSH_F,$<Dbl>1);}
+     | String        {genc.gencode(opcode_type::PUSH_S,$<Str>1);}
+     | True          {genc.gencode(opcode_type::PUSH_B,true);}
+     | False         {genc.gencode(opcode_type::PUSH_B,false);}
      ;
 
 %%

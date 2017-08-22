@@ -19,6 +19,7 @@ class GenerateCode
         void gencode(opcode_type);
         void gencode(opcode_type,int);
         void gencode(opcode_type,double);
+        void gencode(opcode_type,char *);
         void gencode(opcode_type,std::string);
         void gencode(opcode_type,bool);
 

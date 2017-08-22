@@ -1,6 +1,10 @@
 %{
     #include "napl.hpp"
     #include "y.tab.h"
+
+    extern void yyerror(std::string);
+
+    char *scan_string();
 %}
 
 %option noyywrap
@@ -10,6 +14,7 @@ digit [0-9]
 symbol [();:]
 letter [a-zA-Z_]
 id {letter}({letter}|{digit})*
+string \"([^\"\\\n]|\\.)*[\"\n]
 other .
 
 %%
@@ -74,12 +79,42 @@ other .
                 return Type;
             }
 
+"true"      {return True;}
+s
+"false"     {return False;}
+
 "print"     {return Print;}
 
 {id} {char* buf = new char[yyleng+1]; memset(buf,0,yyleng+1); strncpy(buf,yytext,yyleng+1); yylval.Str = buf; return Id;}
 
 {digit}+ {sscanf(yytext,"%d",&yylval.Int); return Num;}
 
+{digit}+"."{digit}* {sscanf(yytext,"%lf",&yylval.Dbl); return RNum;}
+
+{string} {yylval.Str=scan_string(); return String;}
+
 {other} {std::cerr<<"\'"<<yytext[0]<<"\' 不正な文字です"<<std::endl;}
 
 %%
+
+char *scan_string()
+{
+    char *p,*q;
+
+    if(yytext[yyleng-1]!='\"')yyerror("Unterminated string literal");
+
+    for(p=yytext+1,q=yytext;p<yytext+(yyleng-1);*(q++)=*(p++))
+    {
+        if(*p=='\\')
+        {
+            if(*(++p)=='n')*p='\n';
+            else if(*p=='t')*p='\t';
+        }
+    }
+    
+    *q='\0';
+
+    yyleng=q-yytext;
+
+    return yytext;
+}

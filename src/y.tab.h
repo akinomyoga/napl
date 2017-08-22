@@ -48,26 +48,34 @@ extern int yydebug;
     Num = 258,
     Type = 259,
     Com = 260,
-    Id = 261,
-    Add = 262,
-    Sub = 263,
-    Mul = 264,
-    Div = 265,
-    Mod = 266,
-    Print = 267
+    RNum = 261,
+    Id = 262,
+    String = 263,
+    Add = 264,
+    Sub = 265,
+    Mul = 266,
+    Div = 267,
+    Mod = 268,
+    True = 269,
+    False = 270,
+    Print = 271
   };
 #endif
 /* Tokens.  */
 #define Num 258
 #define Type 259
 #define Com 260
-#define Id 261
-#define Add 262
-#define Sub 263
-#define Mul 264
-#define Div 265
-#define Mod 266
-#define Print 267
+#define RNum 261
+#define Id 262
+#define String 263
+#define Add 264
+#define Sub 265
+#define Mul 266
+#define Div 267
+#define Mod 268
+#define True 269
+#define False 270
+#define Print 271
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -84,7 +92,7 @@ union YYSTYPE
 
     opcode_type type;
 
-#line 88 "y.tab.h" /* yacc.c:1909  */
+#line 96 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
