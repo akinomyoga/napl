@@ -3,12 +3,26 @@
 #include "napl_gencode.hpp"
 
 extern int yyparse();
+extern FILE* yyin;
 
 GenerateCode genc;
 
 int main(int argc,char **argv)
 {
-    std::cout<<"*****napl*****\n"<<std::endl;
+    if(argc==1)
+    {
+        std::cout<<"napl"<<std::endl;
+
+        return 0;
+    }
+    else if(argc==2)
+    {
+        if((yyin=fopen(argv[1],"r"))==NULL)
+        {
+            std::cerr<<argv[1]<<": ファイルをオープンできません"<<std::endl;
+            return -1;
+        }
+    }
 
     yyparse();
 
