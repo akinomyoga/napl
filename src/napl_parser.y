@@ -7,10 +7,7 @@
 
     extern int yylex();
 
-    void yyerror(std::string msg)
-    {
-        std::cerr<<"[error]:"<<msg<<std::endl;
-    }
+    void yyerror(std::string msg);
 %}
 
 %union
@@ -68,10 +65,11 @@ global :
        ;
 
 statement_list : statement_list '\n' statement
-               | statement
+               | statement '\n'
                ;
 
 statement : Print expr {genc.gencode(opcode_type::OUTPUT);}
+          | Type Id    {}
           ;
 
 expr : expr Add expr {genc.gencode(opcode_type::ADD);}
@@ -89,3 +87,8 @@ expr : expr Add expr {genc.gencode(opcode_type::ADD);}
      ;
 
 %%
+
+void yyerror(std::string msg)
+{
+    std::cerr<<"[error]:"<<msg<<std::endl;
+}

@@ -31,7 +31,7 @@ class NaplVM
 
         std::stack<vm_stack> stack;
 
-        std::map<opcode_type,void (NaplVM::*)()> function_map;
+        std::unordered_map<opcode_type,void (NaplVM::*)()> function_map;
 
         int code_counter;
 
