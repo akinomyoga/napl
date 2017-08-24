@@ -1,1 +1,6 @@
-/bin/
+/bin/gencode.o
+/bin/lexer.o
+/bin/main.o
+/bin/naplvm.o
+/bin/parser.o
+/bin/napl
