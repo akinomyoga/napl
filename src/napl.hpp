@@ -8,6 +8,9 @@
 #include <stack>
 #include <map>
 #include <functional>
+#include <unordered_map>
+
+#define MEMORY_SIZE 10000
 
 enum class opcode_type : int
 {
