@@ -82,7 +82,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 17 "napl_parser.y" /* yacc.c:1909  */
+#line 20 "napl_parser.y" /* yacc.c:1909  */
 
     int Int;
 
@@ -92,7 +92,9 @@ union YYSTYPE
 
     opcode_type type;
 
-#line 96 "y.tab.h" /* yacc.c:1909  */
+    node_t *node;
+
+#line 98 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

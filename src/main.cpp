@@ -1,6 +1,4 @@
 #include "napl.hpp"
-#include "napl_vm.hpp"
-#include "napl_gencode.hpp"
 
 extern int yyparse();
 extern FILE* yyin;

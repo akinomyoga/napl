@@ -10,11 +10,16 @@ class GenerateCode
 
         int code_count;
 
+        std::string get_dump_tree_str(ast_type);
+        void dump_tree(std::string,int);
+
     public:
 
         std::vector<vm_opcode>& get_code();
 
         int get_count();
+
+        void gencode_tree(node_t *);
 
         void gencode(opcode_type);
         void gencode(opcode_type,int);

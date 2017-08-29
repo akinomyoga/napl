@@ -382,8 +382,8 @@ static void yynoreturn yy_fatal_error (yyconst char* msg  );
 	yy_flex_strncpy( yytext, (yytext_ptr), yyleng + 1 ); \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 27
-#define YY_END_OF_BUFFER 28
+#define YY_NUM_RULES 26
+#define YY_END_OF_BUFFER 27
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -393,13 +393,13 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[66] =
     {   0,
-        0,    0,   28,   26,    1,    1,   26,   26,    7,    2,
-        5,    3,    4,    6,   23,   10,   26,    8,   22,   22,
-       22,   22,   22,   22,   19,   22,    1,   13,    0,   25,
-        0,   24,   23,   11,   12,    9,   22,   22,   22,   22,
-       22,   22,   22,   22,   24,   22,   22,   22,   14,   22,
-       22,   22,   17,   22,   22,   22,   22,   18,   22,   20,
-       21,   22,   15,   16,    0
+        0,    0,   27,   25,    1,    1,   25,   25,    7,    2,
+        5,    3,    4,    6,   22,   10,   25,    8,   21,   21,
+       21,   21,   21,   21,   21,   21,    1,   13,    0,   24,
+        0,   23,   22,   11,   12,    9,   21,   21,   21,   21,
+       21,   21,   21,   21,   23,   21,   21,   21,   14,   21,
+       21,   21,   17,   21,   21,   21,   21,   18,   21,   19,
+       20,   21,   15,   16,    0
     } ;
 
 static yyconst YY_CHAR yy_ec[256] =
@@ -499,10 +499,10 @@ static yyconst flex_int16_t yy_chk[121] =
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static yyconst flex_int32_t yy_rule_can_match_eol[28] =
+static yyconst flex_int32_t yy_rule_can_match_eol[27] =
     {   0,
 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 0, 0, 1, 0, 0,     };
+    0, 0, 0, 0, 1, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -942,51 +942,46 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 83 "napl_lexer.l"
-
-	YY_BREAK
-case 20:
-YY_RULE_SETUP
 #line 84 "napl_lexer.l"
 {return False;}
 	YY_BREAK
-case 21:
+case 20:
 YY_RULE_SETUP
 #line 86 "napl_lexer.l"
 {return Print;}
 	YY_BREAK
-case 22:
+case 21:
 YY_RULE_SETUP
 #line 88 "napl_lexer.l"
 {char* buf = new char[yyleng+1]; memset(buf,0,yyleng+1); strncpy(buf,yytext,yyleng+1); yylval.Str = buf; return Id;}
 	YY_BREAK
-case 23:
+case 22:
 YY_RULE_SETUP
 #line 90 "napl_lexer.l"
 {sscanf(yytext,"%d",&yylval.Int); return Num;}
 	YY_BREAK
-case 24:
+case 23:
 YY_RULE_SETUP
 #line 92 "napl_lexer.l"
 {sscanf(yytext,"%lf",&yylval.Dbl); return RNum;}
 	YY_BREAK
-case 25:
-/* rule 25 can match eol */
+case 24:
+/* rule 24 can match eol */
 YY_RULE_SETUP
 #line 94 "napl_lexer.l"
 {yylval.Str=scan_string(); return String;}
 	YY_BREAK
-case 26:
+case 25:
 YY_RULE_SETUP
 #line 96 "napl_lexer.l"
 {std::cerr<<"\'"<<yytext[0]<<"\' 不正な文字です"<<std::endl;}
 	YY_BREAK
-case 27:
+case 26:
 YY_RULE_SETUP
 #line 98 "napl_lexer.l"
 ECHO;
 	YY_BREAK
-#line 990 "lex.yy.c"
+#line 985 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

@@ -1,5 +1,4 @@
 #include "napl.hpp"
-#include "napl_vm.hpp"
 
 #define VM_CODE_DEBUG
 

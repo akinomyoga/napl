@@ -11,6 +11,7 @@
 #include <unordered_map>
 
 #define MEMORY_SIZE 10000
+#define DUMP_TREE
 
 enum class opcode_type : int
 {
@@ -53,5 +54,9 @@ typedef struct
     bool b_value; //operation codeの値
 
 }vm_opcode;
+
+#include "napl_vm.hpp"
+#include "napl_tree.hpp"
+#include "napl_gencode.hpp"
 
 #endif

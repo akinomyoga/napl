@@ -65,19 +65,22 @@
 #line 1 "napl_parser.y" /* yacc.c:339  */
 
     #include "napl.hpp"
-    #include "napl_vm.hpp"
-    #include "napl_gencode.hpp"
-
-    extern GenerateCode genc;
 
     extern int yylex();
 
-    void yyerror(std::string msg)
-    {
-        std::cerr<<"[error]:"<<msg<<std::endl;
-    }
+    extern node_t *make_node(ast_type,node_t*,node_t*);
+    extern node_t *make_atom(ast_type,int);
+    extern node_t *make_atom(ast_type,double);
+    extern node_t *make_atom(ast_type,std::string);
+    extern node_t *make_atom(ast_type,bool);
 
-#line 81 "y.tab.c" /* yacc.c:339  */
+    extern GenerateCode genc;
+    extern int yylineno;
+
+    void yyerror(std::string msg);
+    ast_type translate_com(opcode_type);
+
+#line 84 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -149,7 +152,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 17 "napl_parser.y" /* yacc.c:355  */
+#line 20 "napl_parser.y" /* yacc.c:355  */
 
     int Int;
 
@@ -159,7 +162,9 @@ union YYSTYPE
 
     opcode_type type;
 
-#line 163 "y.tab.c" /* yacc.c:355  */
+    node_t *node;
+
+#line 168 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -176,7 +181,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 180 "y.tab.c" /* yacc.c:358  */
+#line 185 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -475,9 +480,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    63,    63,    65,    66,    67,    70,    71,    74,    77,
-      78,    79,    80,    81,    82,    83,    84,    85,    86,    87,
-      88
+       0,    71,    71,    73,    74,    75,    78,    79,    82,    85,
+      86,    87,    88,    89,    90,    91,    92,    93,    94,    95,
+      96
 };
 #endif
 
@@ -1267,91 +1272,97 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 63 "napl_parser.y" /* yacc.c:1646  */
+#line 71 "napl_parser.y" /* yacc.c:1646  */
     {genc.gencode(opcode_type::EXIT);}
-#line 1273 "y.tab.c" /* yacc.c:1646  */
+#line 1278 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 67 "napl_parser.y" /* yacc.c:1646  */
+#line 75 "napl_parser.y" /* yacc.c:1646  */
     {yyerrok;}
-#line 1279 "y.tab.c" /* yacc.c:1646  */
+#line 1284 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 74 "napl_parser.y" /* yacc.c:1646  */
-    {genc.gencode(opcode_type::OUTPUT);}
-#line 1285 "y.tab.c" /* yacc.c:1646  */
+#line 82 "napl_parser.y" /* yacc.c:1646  */
+    {genc.gencode_tree(make_node(ast_type::output,(yyvsp[0].node),nullptr));}
+#line 1290 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 77 "napl_parser.y" /* yacc.c:1646  */
-    {genc.gencode(opcode_type::ADD);}
-#line 1291 "y.tab.c" /* yacc.c:1646  */
+#line 85 "napl_parser.y" /* yacc.c:1646  */
+    {(yyval.node)=make_node(ast_type::add,(yyvsp[-2].node),(yyvsp[0].node));}
+#line 1296 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 78 "napl_parser.y" /* yacc.c:1646  */
-    {genc.gencode(opcode_type::SUB);}
-#line 1297 "y.tab.c" /* yacc.c:1646  */
+#line 86 "napl_parser.y" /* yacc.c:1646  */
+    {(yyval.node)=make_node(ast_type::sub,(yyvsp[-2].node),(yyvsp[0].node));}
+#line 1302 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 79 "napl_parser.y" /* yacc.c:1646  */
-    {genc.gencode(opcode_type::MUL);}
-#line 1303 "y.tab.c" /* yacc.c:1646  */
+#line 87 "napl_parser.y" /* yacc.c:1646  */
+    {(yyval.node)=make_node(ast_type::mul,(yyvsp[-2].node),(yyvsp[0].node));}
+#line 1308 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 80 "napl_parser.y" /* yacc.c:1646  */
-    {genc.gencode(opcode_type::DIV);}
-#line 1309 "y.tab.c" /* yacc.c:1646  */
+#line 88 "napl_parser.y" /* yacc.c:1646  */
+    {(yyval.node)=make_node(ast_type::div,(yyvsp[-2].node),(yyvsp[0].node));}
+#line 1314 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 81 "napl_parser.y" /* yacc.c:1646  */
-    {genc.gencode(opcode_type::MOD);}
-#line 1315 "y.tab.c" /* yacc.c:1646  */
+#line 89 "napl_parser.y" /* yacc.c:1646  */
+    {(yyval.node)=make_node(ast_type::mod,(yyvsp[-2].node),(yyvsp[0].node));}
+#line 1320 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 82 "napl_parser.y" /* yacc.c:1646  */
-    {genc.gencode((yyvsp[-1].type));}
-#line 1321 "y.tab.c" /* yacc.c:1646  */
+#line 90 "napl_parser.y" /* yacc.c:1646  */
+    {(yyval.node)=make_node(translate_com((yyvsp[-1].type)),(yyvsp[-2].node),(yyvsp[0].node));}
+#line 1326 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 15:
+#line 91 "napl_parser.y" /* yacc.c:1646  */
+    {(yyval.node)=(yyvsp[-1].node);}
+#line 1332 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 84 "napl_parser.y" /* yacc.c:1646  */
-    {genc.gencode(opcode_type::PUSH_I,(yyvsp[0].Int));}
-#line 1327 "y.tab.c" /* yacc.c:1646  */
+#line 92 "napl_parser.y" /* yacc.c:1646  */
+    {(yyval.node)=make_atom(ast_type::int_value,(yyvsp[0].Int));}
+#line 1338 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 85 "napl_parser.y" /* yacc.c:1646  */
-    {genc.gencode(opcode_type::PUSH_F,(yyvsp[0].Dbl));}
-#line 1333 "y.tab.c" /* yacc.c:1646  */
+#line 93 "napl_parser.y" /* yacc.c:1646  */
+    {(yyval.node)=make_atom(ast_type::float_value,(yyvsp[0].Dbl));}
+#line 1344 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 86 "napl_parser.y" /* yacc.c:1646  */
-    {genc.gencode(opcode_type::PUSH_S,(yyvsp[0].Str));}
-#line 1339 "y.tab.c" /* yacc.c:1646  */
+#line 94 "napl_parser.y" /* yacc.c:1646  */
+    {(yyval.node)=make_atom(ast_type::string_value,(yyvsp[0].Str));}
+#line 1350 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 87 "napl_parser.y" /* yacc.c:1646  */
-    {genc.gencode(opcode_type::PUSH_B,true);}
-#line 1345 "y.tab.c" /* yacc.c:1646  */
+#line 95 "napl_parser.y" /* yacc.c:1646  */
+    {(yyval.node)=make_atom(ast_type::bool_value,true);}
+#line 1356 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 88 "napl_parser.y" /* yacc.c:1646  */
-    {genc.gencode(opcode_type::PUSH_B,false);}
-#line 1351 "y.tab.c" /* yacc.c:1646  */
+#line 96 "napl_parser.y" /* yacc.c:1646  */
+    {(yyval.node)=make_atom(ast_type::bool_value,false);}
+#line 1362 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1355 "y.tab.c" /* yacc.c:1646  */
+#line 1366 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1579,4 +1590,23 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 91 "napl_parser.y" /* yacc.c:1906  */
+#line 99 "napl_parser.y" /* yacc.c:1906  */
+
+
+void yyerror(std::string msg)
+{
+    std::cerr<<"[error]["<<yylineno<<"]:"<<msg<<std::endl;
+}
+
+ast_type translate_com(opcode_type op)
+{
+    switch(op)
+    {
+        case opcode_type::EQ: return ast_type::eq;
+        case opcode_type::NOTEQ: return ast_type::noteq;
+        case opcode_type::GREAT: return ast_type::great;
+        case opcode_type::GREATEQ: return ast_type::greateq;
+        case opcode_type::LESS: return ast_type::less;
+        case opcode_type::LESSEQ: return ast_type::lesseq;
+    }
+}
