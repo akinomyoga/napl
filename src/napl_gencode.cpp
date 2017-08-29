@@ -1,11 +1,11 @@
 #include "napl.hpp"
 
-std::vector<vm_opcode>& GenerateCode::get_code()
+std::vector<vm_opcode>& GenerateCode::get_code()noexcept
 {
     return this->opcode;
 }
 
-int GenerateCode::get_count()
+int GenerateCode::get_count() const noexcept
 {
     return code_count;
 }

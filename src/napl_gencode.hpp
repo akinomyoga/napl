@@ -15,9 +15,9 @@ class GenerateCode
 
     public:
 
-        std::vector<vm_opcode>& get_code();
+        std::vector<vm_opcode>& get_code()noexcept;
 
-        int get_count();
+        int get_count()const noexcept;
 
         void gencode_tree(node_t *);
 
