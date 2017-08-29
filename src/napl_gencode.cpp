@@ -69,15 +69,15 @@ void GenerateCode::gencode(opcode_type type,bool b_value)
     opcode.push_back(op);
 }
 
-std::string GenerateCode::get_dump_tree_str(ast_type type)
+std::string GenerateCode::get_dump_tree_str(node_t *node)
 {
-    switch(type)
+    switch(node->type)
     {
         case ast_type::nop: return "nop";
-        case ast_type::int_value: return "int_value";
-        case ast_type::float_value: return "float_value";
-        case ast_type::string_value: return "string_value";
-        case ast_type::bool_value: return "bool_value";
+        case ast_type::int_value: return "int_value:"+std::to_string(node->i_value);
+        case ast_type::float_value: return "float_value:"+std::to_string(node->f_value);
+        case ast_type::string_value: return "string_value:"+node->s_value;
+        case ast_type::bool_value: return "bool_value:"+std::to_string(node->b_value);
         case ast_type::add: return "add";
         case ast_type::sub: return "sub";
         case ast_type::mul: return "mul";
@@ -113,7 +113,7 @@ void GenerateCode::gencode_tree(node_t *ast_node)
     }
 
     #ifdef DUMP_TREE
-    dump_tree(get_dump_tree_str(ast_node->type),tree_deep);
+    dump_tree(get_dump_tree_str(ast_node),tree_deep);
     #endif
 
     #ifdef DUMP_TREE

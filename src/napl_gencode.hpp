@@ -10,7 +10,7 @@ class GenerateCode
 
         int code_count;
 
-        std::string get_dump_tree_str(ast_type);
+        std::string get_dump_tree_str(node_t *);
         void dump_tree(std::string,int);
 
     public:

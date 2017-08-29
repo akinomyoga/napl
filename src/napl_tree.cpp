@@ -1,6 +1,6 @@
 #include "napl.hpp"
 
-node_t *make_node(ast_type type,node_t *l,node_t *r)
+node_t *make_node(ast_type type,node_t *l,node_t *r) noexcept
 {
     node_t *new_node=new node_t;
 
@@ -11,7 +11,7 @@ node_t *make_node(ast_type type,node_t *l,node_t *r)
     return new_node;
 }
 
-node_t *make_atom(ast_type type,int i)
+node_t *make_atom(ast_type type,int i) noexcept
 {
     node_t *new_atom=new node_t;
 
@@ -23,7 +23,7 @@ node_t *make_atom(ast_type type,int i)
     return new_atom;
 }
 
-node_t *make_atom(ast_type type,double f)
+node_t *make_atom(ast_type type,double f) noexcept
 {
     node_t *new_atom=new node_t;
 
@@ -35,7 +35,7 @@ node_t *make_atom(ast_type type,double f)
     return new_atom;
 }
 
-node_t *make_atom(ast_type type,std::string s)
+node_t *make_atom(ast_type type,std::string s) noexcept
 {
     node_t *new_atom=new node_t;
 
@@ -47,7 +47,7 @@ node_t *make_atom(ast_type type,std::string s)
     return new_atom;
 }
 
-node_t *make_atom(ast_type type,bool b)
+node_t *make_atom(ast_type type,bool b) noexcept
 {
     node_t *new_atom=new node_t;
 
