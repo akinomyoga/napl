@@ -22,7 +22,15 @@ int main(int argc,char **argv)
         }
     }
 
+    #ifdef DUMP_TREE
+    std::cout<<"----------AST----------"<<std::endl;
+    #endif
+
     yyparse();
+
+    #ifdef DUMP_TREE
+    std::cout<<"-----------------------"<<std::endl;
+    #endif
 
     NaplVM vm(genc.get_code());
 
