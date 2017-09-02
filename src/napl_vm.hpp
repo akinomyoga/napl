@@ -23,6 +23,8 @@ typedef struct
 
 }vm_stack;
 
+using memory_t=vm_stack;
+
 class NaplVM
 {
     private:
@@ -30,6 +32,11 @@ class NaplVM
         std::vector<vm_opcode> opcode;
 
         std::stack<vm_stack> stack;
+
+        std::array<memory_t,MEMORY_SIZE> memory;
+
+        std::stack<std::vector<memory_t>> local_var_stack;
+        std::stack<int> return_addr_stack;
 
         std::unordered_map<opcode_type,void (NaplVM::*)()> function_map;
 
@@ -63,6 +70,9 @@ class NaplVM
         inline void greateq();
         inline void less();
         inline void lesseq();
+
+        inline void write_memory();
+        inline void ref_memory();
 
         inline void exit_vm();
 

@@ -90,6 +90,8 @@ std::string GenerateCode::get_dump_tree_str(node_t *node)
         case ast_type::greateq: return "greateq";
         case ast_type::less: return "less";
         case ast_type::lesseq: return "lesseq";
+        case ast_type::write_memory: return "write_memory";
+        case ast_type::ref_memory: return "ref_memory";
     }
 }
 
@@ -146,5 +148,7 @@ void GenerateCode::gencode_tree(node_t *ast_node)
         case ast_type::greateq: gencode(opcode_type::GREATEQ); break;
         case ast_type::less: gencode(opcode_type::LESS); break;
         case ast_type::lesseq: gencode(opcode_type::LESSEQ); break;
+        case ast_type::write_memory: gencode(opcode_type::WRITE_MEM); break;
+        case ast_type::ref_memory: gencode(opcode_type::REF_MEM); break;
     }
 }

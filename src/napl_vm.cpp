@@ -48,6 +48,8 @@ void NaplVM::init_function_map()
     function_map[opcode_type::LESS]=&NaplVM::less;
     function_map[opcode_type::LESSEQ]=&NaplVM::lesseq;
     function_map[opcode_type::EXIT]=&NaplVM::exit_vm;
+    function_map[opcode_type::WRITE_MEM]=&NaplVM::write_memory;
+    function_map[opcode_type::REF_MEM]=&NaplVM::ref_memory;
 }
 
 inline bool NaplVM::check_stack_type(stack_type type_1,stack_type type_2)
@@ -58,6 +60,32 @@ inline bool NaplVM::check_stack_type(stack_type type_1,stack_type type_2)
 inline void NaplVM::exit_vm()
 {
     exit(1);
+}
+
+inline void NaplVM::write_memory()
+{
+    int addr=pop().i_value;
+
+    switch(stack.top().type)
+    {
+        case stack_type::INT: memory[addr].i_value=pop().i_value; memory[addr].type=stack_type::INT; break;
+        case stack_type::FLOAT: memory[addr].f_value=pop().f_value; memory[addr].type=stack_type::FLOAT; break;
+        case stack_type::STRING: memory[addr].s_value=pop().s_value; memory[addr].type=stack_type::STRING; break;
+        case stack_type::BOOL: memory[addr].b_value=pop().b_value; memory[addr].type=stack_type::BOOL; break;
+    }
+}
+
+inline void NaplVM::ref_memory()
+{
+    int addr=pop().i_value;
+
+    switch(memory[addr].type)
+    {
+        case stack_type::INT: push(memory[addr].i_value); break;
+        case stack_type::FLOAT: push(memory[addr].f_value); break;
+        case stack_type::STRING: push(memory[addr].s_value); break;
+        case stack_type::BOOL: push(memory[addr].b_value); break;
+    }
 }
 
 inline void NaplVM::eq()
@@ -499,6 +527,9 @@ void NaplVM::debug()
         case opcode_type::LESSEQ: std::cout<<"[LESSEQ]"<<std::endl; break;
         case opcode_type::GREAT: std::cout<<"[GREAT]"<<std::endl; break;
         case opcode_type::GREATEQ: std::cout<<"[GREATEQ]"<<std::endl; break;
+
+        case opcode_type::WRITE_MEM: std::cout<<"[WRITE_MEM]"<<std::endl; break;
+        case opcode_type::REF_MEM: std::cout<<"[REF_MEM]"<<std::endl; break;
     }
 }
 

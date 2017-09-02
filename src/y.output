@@ -1,9 +1,3 @@
-Terminals unused in grammar
-
-   Type
-   Id
-
-
 文法
 
     0 $accept: program $end
@@ -18,59 +12,71 @@ Terminals unused in grammar
     6               | statement
 
     7 statement: Print expr
+    8          | define_variable
+    9          | assign_variable
 
-    8 expr: expr Add expr
-    9     | expr Sub expr
-   10     | expr Mul expr
-   11     | expr Div expr
-   12     | expr Mod expr
-   13     | expr Com expr
-   14     | '(' expr ')'
-   15     | Num
-   16     | RNum
-   17     | String
-   18     | True
-   19     | False
+   10 define_variable: Type Id
+
+   11 assign_variable: Id '=' expr
+
+   12 expr: expr Add expr
+   13     | expr Sub expr
+   14     | expr Mul expr
+   15     | expr Div expr
+   16     | expr Mod expr
+   17     | expr Com expr
+   18     | '(' expr ')'
+   19     | Num
+   20     | RNum
+   21     | String
+   22     | True
+   23     | False
+   24     | Id
 
 
 出現位置の規則による終端
 
 $end (0) 0
 '\n' (10) 4 5
-'(' (40) 14
-')' (41) 14
+'(' (40) 18
+')' (41) 18
+'=' (61) 11
 error (256) 4
-Num (258) 15
-Type (259)
-Com (260) 13
-RNum (261) 16
-Id (262)
-String (263) 17
-Add (264) 8
-Sub (265) 9
-Mul (266) 10
-Div (267) 11
-Mod (268) 12
-True (269) 18
-False (270) 19
+Num (258) 19
+Type (259) 10
+Com (260) 17
+RNum (261) 20
+Id (262) 10 11 24
+String (263) 21
+Add (264) 12
+Sub (265) 13
+Mul (266) 14
+Div (267) 15
+Mod (268) 16
+True (269) 22
+False (270) 23
 Print (271) 7
 
 
 出現位置の規則による非終端
 
-$accept (20)
+$accept (21)
     左辺: 0
-program (21)
+program (22)
     左辺: 1, 右辺: 0
-global (22)
+global (23)
     左辺: 2 3 4, 右辺: 1 3
-statement_list (23)
+statement_list (24)
     左辺: 5 6, 右辺: 3 5
-statement (24)
-    左辺: 7, 右辺: 5 6
-expr (25)
-    左辺: 8 9 10 11 12 13 14 15 16 17 18 19, 右辺: 7 8 9 10 11
-    12 13 14
+statement (25)
+    左辺: 7 8 9, 右辺: 5 6
+define_variable (26)
+    左辺: 10, 右辺: 8
+assign_variable (27)
+    左辺: 11, 右辺: 9
+expr (28)
+    左辺: 12 13 14 15 16 17 18 19 20 21 22 23 24, 右辺: 7 11 12
+    13 14 15 16 17 18
 
 
 State 0
@@ -80,6 +86,8 @@ State 0
     error  shift, and go to state 1
 
     $end   reduce using rule 2 (global)
+    Type   reduce using rule 2 (global)
+    Id     reduce using rule 2 (global)
     Print  reduce using rule 2 (global)
 
     program  go to state 2
@@ -105,12 +113,16 @@ State 3
     1 program: global .
     3 global: global . statement_list
 
-    Print  shift, and go to state 6
+    Type   shift, and go to state 6
+    Id     shift, and go to state 7
+    Print  shift, and go to state 8
 
     $default  reduce using rule 1 (program)
 
-    statement_list  go to state 7
-    statement       go to state 8
+    statement_list   go to state 9
+    statement        go to state 10
+    define_variable  go to state 11
+    assign_variable  go to state 12
 
 
 State 4
@@ -129,317 +141,406 @@ State 5
 
 State 6
 
-    7 statement: Print . expr
+   10 define_variable: Type . Id
 
-    Num     shift, and go to state 9
-    RNum    shift, and go to state 10
-    String  shift, and go to state 11
-    True    shift, and go to state 12
-    False   shift, and go to state 13
-    '('     shift, and go to state 14
-
-    expr  go to state 15
+    Id  shift, and go to state 13
 
 
 State 7
 
+   11 assign_variable: Id . '=' expr
+
+    '='  shift, and go to state 14
+
+
+State 8
+
+    7 statement: Print . expr
+
+    Num     shift, and go to state 15
+    RNum    shift, and go to state 16
+    Id      shift, and go to state 17
+    String  shift, and go to state 18
+    True    shift, and go to state 19
+    False   shift, and go to state 20
+    '('     shift, and go to state 21
+
+    expr  go to state 22
+
+
+State 9
+
     3 global: global statement_list .
     5 statement_list: statement_list . '\n' statement
 
-    '\n'  shift, and go to state 16
+    '\n'  shift, and go to state 23
 
     $default  reduce using rule 3 (global)
 
 
-State 8
+State 10
 
     6 statement_list: statement .
 
     $default  reduce using rule 6 (statement_list)
 
 
-State 9
-
-   15 expr: Num .
-
-    $default  reduce using rule 15 (expr)
-
-
-State 10
-
-   16 expr: RNum .
-
-    $default  reduce using rule 16 (expr)
-
-
 State 11
 
-   17 expr: String .
+    8 statement: define_variable .
 
-    $default  reduce using rule 17 (expr)
+    $default  reduce using rule 8 (statement)
 
 
 State 12
 
-   18 expr: True .
+    9 statement: assign_variable .
 
-    $default  reduce using rule 18 (expr)
+    $default  reduce using rule 9 (statement)
 
 
 State 13
 
-   19 expr: False .
+   10 define_variable: Type Id .
 
-    $default  reduce using rule 19 (expr)
+    $default  reduce using rule 10 (define_variable)
 
 
 State 14
 
-   14 expr: '(' . expr ')'
+   11 assign_variable: Id '=' . expr
 
-    Num     shift, and go to state 9
-    RNum    shift, and go to state 10
-    String  shift, and go to state 11
-    True    shift, and go to state 12
-    False   shift, and go to state 13
-    '('     shift, and go to state 14
+    Num     shift, and go to state 15
+    RNum    shift, and go to state 16
+    Id      shift, and go to state 17
+    String  shift, and go to state 18
+    True    shift, and go to state 19
+    False   shift, and go to state 20
+    '('     shift, and go to state 21
 
-    expr  go to state 17
+    expr  go to state 24
 
 
 State 15
 
-    7 statement: Print expr .
-    8 expr: expr . Add expr
-    9     | expr . Sub expr
-   10     | expr . Mul expr
-   11     | expr . Div expr
-   12     | expr . Mod expr
-   13     | expr . Com expr
+   19 expr: Num .
 
-    Com  shift, and go to state 18
-    Add  shift, and go to state 19
-    Sub  shift, and go to state 20
-    Mul  shift, and go to state 21
-    Div  shift, and go to state 22
-    Mod  shift, and go to state 23
-
-    $default  reduce using rule 7 (statement)
+    $default  reduce using rule 19 (expr)
 
 
 State 16
 
-    5 statement_list: statement_list '\n' . statement
+   20 expr: RNum .
 
-    Print  shift, and go to state 6
-
-    statement  go to state 24
+    $default  reduce using rule 20 (expr)
 
 
 State 17
 
-    8 expr: expr . Add expr
-    9     | expr . Sub expr
-   10     | expr . Mul expr
-   11     | expr . Div expr
-   12     | expr . Mod expr
-   13     | expr . Com expr
-   14     | '(' expr . ')'
+   24 expr: Id .
 
-    Com  shift, and go to state 18
-    Add  shift, and go to state 19
-    Sub  shift, and go to state 20
-    Mul  shift, and go to state 21
-    Div  shift, and go to state 22
-    Mod  shift, and go to state 23
-    ')'  shift, and go to state 25
+    $default  reduce using rule 24 (expr)
 
 
 State 18
 
-   13 expr: expr Com . expr
+   21 expr: String .
 
-    Num     shift, and go to state 9
-    RNum    shift, and go to state 10
-    String  shift, and go to state 11
-    True    shift, and go to state 12
-    False   shift, and go to state 13
-    '('     shift, and go to state 14
-
-    expr  go to state 26
+    $default  reduce using rule 21 (expr)
 
 
 State 19
 
-    8 expr: expr Add . expr
+   22 expr: True .
 
-    Num     shift, and go to state 9
-    RNum    shift, and go to state 10
-    String  shift, and go to state 11
-    True    shift, and go to state 12
-    False   shift, and go to state 13
-    '('     shift, and go to state 14
-
-    expr  go to state 27
+    $default  reduce using rule 22 (expr)
 
 
 State 20
 
-    9 expr: expr Sub . expr
+   23 expr: False .
 
-    Num     shift, and go to state 9
-    RNum    shift, and go to state 10
-    String  shift, and go to state 11
-    True    shift, and go to state 12
-    False   shift, and go to state 13
-    '('     shift, and go to state 14
-
-    expr  go to state 28
+    $default  reduce using rule 23 (expr)
 
 
 State 21
 
-   10 expr: expr Mul . expr
+   18 expr: '(' . expr ')'
 
-    Num     shift, and go to state 9
-    RNum    shift, and go to state 10
-    String  shift, and go to state 11
-    True    shift, and go to state 12
-    False   shift, and go to state 13
-    '('     shift, and go to state 14
+    Num     shift, and go to state 15
+    RNum    shift, and go to state 16
+    Id      shift, and go to state 17
+    String  shift, and go to state 18
+    True    shift, and go to state 19
+    False   shift, and go to state 20
+    '('     shift, and go to state 21
 
-    expr  go to state 29
+    expr  go to state 25
 
 
 State 22
 
-   11 expr: expr Div . expr
+    7 statement: Print expr .
+   12 expr: expr . Add expr
+   13     | expr . Sub expr
+   14     | expr . Mul expr
+   15     | expr . Div expr
+   16     | expr . Mod expr
+   17     | expr . Com expr
 
-    Num     shift, and go to state 9
-    RNum    shift, and go to state 10
-    String  shift, and go to state 11
-    True    shift, and go to state 12
-    False   shift, and go to state 13
-    '('     shift, and go to state 14
+    Com  shift, and go to state 26
+    Add  shift, and go to state 27
+    Sub  shift, and go to state 28
+    Mul  shift, and go to state 29
+    Div  shift, and go to state 30
+    Mod  shift, and go to state 31
 
-    expr  go to state 30
+    $default  reduce using rule 7 (statement)
 
 
 State 23
 
-   12 expr: expr Mod . expr
+    5 statement_list: statement_list '\n' . statement
 
-    Num     shift, and go to state 9
-    RNum    shift, and go to state 10
-    String  shift, and go to state 11
-    True    shift, and go to state 12
-    False   shift, and go to state 13
-    '('     shift, and go to state 14
+    Type   shift, and go to state 6
+    Id     shift, and go to state 7
+    Print  shift, and go to state 8
 
-    expr  go to state 31
+    statement        go to state 32
+    define_variable  go to state 11
+    assign_variable  go to state 12
 
 
 State 24
+
+   11 assign_variable: Id '=' expr .
+   12 expr: expr . Add expr
+   13     | expr . Sub expr
+   14     | expr . Mul expr
+   15     | expr . Div expr
+   16     | expr . Mod expr
+   17     | expr . Com expr
+
+    Com  shift, and go to state 26
+    Add  shift, and go to state 27
+    Sub  shift, and go to state 28
+    Mul  shift, and go to state 29
+    Div  shift, and go to state 30
+    Mod  shift, and go to state 31
+
+    $default  reduce using rule 11 (assign_variable)
+
+
+State 25
+
+   12 expr: expr . Add expr
+   13     | expr . Sub expr
+   14     | expr . Mul expr
+   15     | expr . Div expr
+   16     | expr . Mod expr
+   17     | expr . Com expr
+   18     | '(' expr . ')'
+
+    Com  shift, and go to state 26
+    Add  shift, and go to state 27
+    Sub  shift, and go to state 28
+    Mul  shift, and go to state 29
+    Div  shift, and go to state 30
+    Mod  shift, and go to state 31
+    ')'  shift, and go to state 33
+
+
+State 26
+
+   17 expr: expr Com . expr
+
+    Num     shift, and go to state 15
+    RNum    shift, and go to state 16
+    Id      shift, and go to state 17
+    String  shift, and go to state 18
+    True    shift, and go to state 19
+    False   shift, and go to state 20
+    '('     shift, and go to state 21
+
+    expr  go to state 34
+
+
+State 27
+
+   12 expr: expr Add . expr
+
+    Num     shift, and go to state 15
+    RNum    shift, and go to state 16
+    Id      shift, and go to state 17
+    String  shift, and go to state 18
+    True    shift, and go to state 19
+    False   shift, and go to state 20
+    '('     shift, and go to state 21
+
+    expr  go to state 35
+
+
+State 28
+
+   13 expr: expr Sub . expr
+
+    Num     shift, and go to state 15
+    RNum    shift, and go to state 16
+    Id      shift, and go to state 17
+    String  shift, and go to state 18
+    True    shift, and go to state 19
+    False   shift, and go to state 20
+    '('     shift, and go to state 21
+
+    expr  go to state 36
+
+
+State 29
+
+   14 expr: expr Mul . expr
+
+    Num     shift, and go to state 15
+    RNum    shift, and go to state 16
+    Id      shift, and go to state 17
+    String  shift, and go to state 18
+    True    shift, and go to state 19
+    False   shift, and go to state 20
+    '('     shift, and go to state 21
+
+    expr  go to state 37
+
+
+State 30
+
+   15 expr: expr Div . expr
+
+    Num     shift, and go to state 15
+    RNum    shift, and go to state 16
+    Id      shift, and go to state 17
+    String  shift, and go to state 18
+    True    shift, and go to state 19
+    False   shift, and go to state 20
+    '('     shift, and go to state 21
+
+    expr  go to state 38
+
+
+State 31
+
+   16 expr: expr Mod . expr
+
+    Num     shift, and go to state 15
+    RNum    shift, and go to state 16
+    Id      shift, and go to state 17
+    String  shift, and go to state 18
+    True    shift, and go to state 19
+    False   shift, and go to state 20
+    '('     shift, and go to state 21
+
+    expr  go to state 39
+
+
+State 32
 
     5 statement_list: statement_list '\n' statement .
 
     $default  reduce using rule 5 (statement_list)
 
 
-State 25
+State 33
 
-   14 expr: '(' expr ')' .
+   18 expr: '(' expr ')' .
 
-    $default  reduce using rule 14 (expr)
+    $default  reduce using rule 18 (expr)
 
 
-State 26
+State 34
 
-    8 expr: expr . Add expr
-    9     | expr . Sub expr
-   10     | expr . Mul expr
-   11     | expr . Div expr
-   12     | expr . Mod expr
-   13     | expr . Com expr
-   13     | expr Com expr .
+   12 expr: expr . Add expr
+   13     | expr . Sub expr
+   14     | expr . Mul expr
+   15     | expr . Div expr
+   16     | expr . Mod expr
+   17     | expr . Com expr
+   17     | expr Com expr .
 
-    Add  shift, and go to state 19
-    Sub  shift, and go to state 20
-    Mul  shift, and go to state 21
-    Div  shift, and go to state 22
-    Mod  shift, and go to state 23
+    Add  shift, and go to state 27
+    Sub  shift, and go to state 28
+    Mul  shift, and go to state 29
+    Div  shift, and go to state 30
+    Mod  shift, and go to state 31
+
+    $default  reduce using rule 17 (expr)
+
+
+State 35
+
+   12 expr: expr . Add expr
+   12     | expr Add expr .
+   13     | expr . Sub expr
+   14     | expr . Mul expr
+   15     | expr . Div expr
+   16     | expr . Mod expr
+   17     | expr . Com expr
+
+    Mul  shift, and go to state 29
+    Div  shift, and go to state 30
+    Mod  shift, and go to state 31
+
+    $default  reduce using rule 12 (expr)
+
+
+State 36
+
+   12 expr: expr . Add expr
+   13     | expr . Sub expr
+   13     | expr Sub expr .
+   14     | expr . Mul expr
+   15     | expr . Div expr
+   16     | expr . Mod expr
+   17     | expr . Com expr
+
+    Mul  shift, and go to state 29
+    Div  shift, and go to state 30
+    Mod  shift, and go to state 31
 
     $default  reduce using rule 13 (expr)
 
 
-State 27
+State 37
 
-    8 expr: expr . Add expr
-    8     | expr Add expr .
-    9     | expr . Sub expr
-   10     | expr . Mul expr
-   11     | expr . Div expr
-   12     | expr . Mod expr
-   13     | expr . Com expr
+   12 expr: expr . Add expr
+   13     | expr . Sub expr
+   14     | expr . Mul expr
+   14     | expr Mul expr .
+   15     | expr . Div expr
+   16     | expr . Mod expr
+   17     | expr . Com expr
 
-    Mul  shift, and go to state 21
-    Div  shift, and go to state 22
-    Mod  shift, and go to state 23
-
-    $default  reduce using rule 8 (expr)
+    $default  reduce using rule 14 (expr)
 
 
-State 28
+State 38
 
-    8 expr: expr . Add expr
-    9     | expr . Sub expr
-    9     | expr Sub expr .
-   10     | expr . Mul expr
-   11     | expr . Div expr
-   12     | expr . Mod expr
-   13     | expr . Com expr
+   12 expr: expr . Add expr
+   13     | expr . Sub expr
+   14     | expr . Mul expr
+   15     | expr . Div expr
+   15     | expr Div expr .
+   16     | expr . Mod expr
+   17     | expr . Com expr
 
-    Mul  shift, and go to state 21
-    Div  shift, and go to state 22
-    Mod  shift, and go to state 23
-
-    $default  reduce using rule 9 (expr)
+    $default  reduce using rule 15 (expr)
 
 
-State 29
+State 39
 
-    8 expr: expr . Add expr
-    9     | expr . Sub expr
-   10     | expr . Mul expr
-   10     | expr Mul expr .
-   11     | expr . Div expr
-   12     | expr . Mod expr
-   13     | expr . Com expr
+   12 expr: expr . Add expr
+   13     | expr . Sub expr
+   14     | expr . Mul expr
+   15     | expr . Div expr
+   16     | expr . Mod expr
+   16     | expr Mod expr .
+   17     | expr . Com expr
 
-    $default  reduce using rule 10 (expr)
-
-
-State 30
-
-    8 expr: expr . Add expr
-    9     | expr . Sub expr
-   10     | expr . Mul expr
-   11     | expr . Div expr
-   11     | expr Div expr .
-   12     | expr . Mod expr
-   13     | expr . Com expr
-
-    $default  reduce using rule 11 (expr)
-
-
-State 31
-
-    8 expr: expr . Add expr
-    9     | expr . Sub expr
-   10     | expr . Mul expr
-   11     | expr . Div expr
-   12     | expr . Mod expr
-   12     | expr Mod expr .
-   13     | expr . Com expr
-
-    $default  reduce using rule 12 (expr)
+    $default  reduce using rule 16 (expr)

@@ -7,6 +7,7 @@
 #include <typeinfo>
 #include <stack>
 #include <map>
+#include <array>
 #include <functional>
 #include <unordered_map>
 
@@ -25,6 +26,10 @@ enum class opcode_type : int
     JUMP,JUMP_NOT, //JUMP関連の命令
 
     EQ,NOTEQ,GREAT,GREATEQ,LESS,LESSEQ, //比較命令
+
+    WRITE_MEM, //メモリ書き込み命令
+
+    REF_MEM,
 
     EXIT, //終了命令
 

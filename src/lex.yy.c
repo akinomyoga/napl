@@ -394,7 +394,7 @@ struct yy_trans_info
 static yyconst flex_int16_t yy_accept[66] =
     {   0,
         0,    0,   27,   25,    1,    1,   25,   25,    7,    2,
-        5,    3,    4,    6,   22,   10,   25,    8,   21,   21,
+        5,    3,    4,    6,   22,   10,    2,    8,   21,   21,
        21,   21,   21,   21,   21,   21,    1,   13,    0,   24,
         0,   23,   22,   11,   12,    9,   21,   21,   21,   21,
        21,   21,   21,   21,   23,   21,   21,   21,   14,   21,
@@ -859,7 +859,7 @@ case 8:
 YY_RULE_SETUP
 #line 32 "napl_lexer.l"
 {
-            yylval.type=opcode_type::GREAT;
+            yylval.op_type=opcode_type::GREAT;
             return Com;
         }
 	YY_BREAK
@@ -867,7 +867,7 @@ case 9:
 YY_RULE_SETUP
 #line 37 "napl_lexer.l"
 {
-            yylval.type=opcode_type::GREATEQ;
+            yylval.op_type=opcode_type::GREATEQ;
             return Com;
         }
 	YY_BREAK
@@ -875,7 +875,7 @@ case 10:
 YY_RULE_SETUP
 #line 42 "napl_lexer.l"
 {
-            yylval.type=opcode_type::LESS;
+            yylval.op_type=opcode_type::LESS;
             return Com;
         }
 	YY_BREAK
@@ -883,7 +883,7 @@ case 11:
 YY_RULE_SETUP
 #line 47 "napl_lexer.l"
 {
-            yylval.type=opcode_type::LESSEQ;
+            yylval.op_type=opcode_type::LESSEQ;
             return Com;
         }
 	YY_BREAK
@@ -891,7 +891,7 @@ case 12:
 YY_RULE_SETUP
 #line 52 "napl_lexer.l"
 {
-            yylval.type=opcode_type::EQ;
+            yylval.op_type=opcode_type::EQ;
             return Com;
         }
 	YY_BREAK
@@ -899,7 +899,7 @@ case 13:
 YY_RULE_SETUP
 #line 57 "napl_lexer.l"
 {
-            yylval.type=opcode_type::NOTEQ;
+            yylval.op_type=opcode_type::NOTEQ;
             return Com;
         }
 	YY_BREAK
@@ -907,7 +907,7 @@ case 14:
 YY_RULE_SETUP
 #line 62 "napl_lexer.l"
 {
-                yylval.Int=static_cast<int>(variable_type::INT); 
+                yylval.type=variable_type::INT; 
                 return Type;
             }
 	YY_BREAK
@@ -915,7 +915,7 @@ case 15:
 YY_RULE_SETUP
 #line 67 "napl_lexer.l"
 {
-                yylval.Int=static_cast<int>(variable_type::FLOAT);
+                yylval.type=variable_type::FLOAT;
                 return Type;
             }
 	YY_BREAK
@@ -923,7 +923,7 @@ case 16:
 YY_RULE_SETUP
 #line 72 "napl_lexer.l"
 {
-                yylval.Int=static_cast<int>(variable_type::STRING);
+                yylval.type=variable_type::STRING;
                 return Type;
             }
 	YY_BREAK
@@ -931,7 +931,7 @@ case 17:
 YY_RULE_SETUP
 #line 77 "napl_lexer.l"
 {
-                yylval.Int=static_cast<int>(variable_type::BOOL);
+                yylval.type=variable_type::BOOL;
                 return Type;
             }
 	YY_BREAK

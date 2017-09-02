@@ -11,7 +11,7 @@
 
 ws [ \n\t]
 digit [0-9]
-symbol [();:]
+symbol [();:=]
 letter [a-zA-Z_]
 id {letter}({letter}|{digit})*
 string \"([^\"\\\n]|\\.)*[\"\n]
@@ -30,52 +30,52 @@ other .
 "%" {return Mod;}
 
 ">"     {
-            yylval.type=opcode_type::GREAT;
+            yylval.op_type=opcode_type::GREAT;
             return Com;
         }
 
 ">="    {
-            yylval.type=opcode_type::GREATEQ;
+            yylval.op_type=opcode_type::GREATEQ;
             return Com;
         }
 
 "<"     {
-            yylval.type=opcode_type::LESS;
+            yylval.op_type=opcode_type::LESS;
             return Com;
         }
 
 "<="    {
-            yylval.type=opcode_type::LESSEQ;
+            yylval.op_type=opcode_type::LESSEQ;
             return Com;
         }
 
 "=="    {
-            yylval.type=opcode_type::EQ;
+            yylval.op_type=opcode_type::EQ;
             return Com;
         }
 
 "!="    {
-            yylval.type=opcode_type::NOTEQ;
+            yylval.op_type=opcode_type::NOTEQ;
             return Com;
         }
 
 "int"       {
-                yylval.Int=static_cast<int>(variable_type::INT); 
+                yylval.type=variable_type::INT; 
                 return Type;
             }
 
 "double"    {
-                yylval.Int=static_cast<int>(variable_type::FLOAT);
+                yylval.type=variable_type::FLOAT;
                 return Type;
             }
 
 "string"    {
-                yylval.Int=static_cast<int>(variable_type::STRING);
+                yylval.type=variable_type::STRING;
                 return Type;
             }
 
 "bool"      {
-                yylval.Int=static_cast<int>(variable_type::BOOL);
+                yylval.type=variable_type::BOOL;
                 return Type;
             }
 
