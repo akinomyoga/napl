@@ -55,6 +55,7 @@
 %token Add Sub Mul Div Mod
 %token True False
 %token Print
+%token If Else
 
 %left Com
 %left Add Sub
@@ -62,7 +63,7 @@
 
 %type <node> expr
 %type <node> assign_variable
-
+%type <Int> if_statement
 
 /*
 *********文法*********
@@ -103,7 +104,30 @@ statement_list : statement_list '\n' statement
 statement : Print expr {genc.gencode_tree(make_node(ast_type::output,$<node>2,nullptr));}
           | define_variable
           | assign_variable {genc.gencode_tree($<node>1);}
+          | if_statement_list
           ;
+
+block : '{' statement_list '}'
+      | statement
+      ;
+
+if_statement_list : if_statement {genc.backpatch($<Int>1,genc.get_count());}
+                  | if_statement else_statement
+                  ;
+
+if_statement : If expr 
+                        {
+                            genc.gencode_tree($<node>2);
+                            genc.gencode(opcode_type::JUMP_NOT,-1);
+                            $<Int>$=genc.get_count();
+                        }
+               block    {
+                            $$=$<Int>3;
+                        }
+             ;
+
+else_statement : Else block
+               ;
 
 define_variable : Type Id {define_var($<type>1,$<Str>2);}
                 ;
@@ -123,7 +147,7 @@ expr : expr Add expr {$$=make_node(ast_type::add,$<node>1,$<node>3);}
      | '(' expr ')'  {$$=$<node>2;}
      | Num           {$$=make_atom(ast_type::int_value,$<Int>1);}
      | RNum          {$$=make_atom(ast_type::float_value,$<Dbl>1);}
-     | String        {$$=make_atom(ast_type::string_value,$<Str>1);}
+     | String        {$$=make_atom(ast_type::string_value,std::string($<Str>1));}
      | True          {$$=make_atom(ast_type::bool_value,true);}
      | False         {$$=make_atom(ast_type::bool_value,false);}
      | Id            {$$=ref_var($<Str>1);}

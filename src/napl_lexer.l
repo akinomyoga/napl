@@ -85,6 +85,10 @@ other .
 
 "print"     {return Print;}
 
+"if"        {return If;}
+
+"else"      {return Else;}
+
 {id} {char* buf = new char[yyleng+1]; memset(buf,0,yyleng+1); strncpy(buf,yytext,yyleng+1); yylval.Str = buf; return Id;}
 
 {digit}+ {sscanf(yytext,"%d",&yylval.Int); return Num;}

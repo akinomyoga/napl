@@ -5,9 +5,14 @@ std::vector<vm_opcode>& GenerateCode::get_code()noexcept
     return this->opcode;
 }
 
+void GenerateCode::backpatch(int place,int value)
+{
+    opcode[place].i_value=value;
+}
+
 int GenerateCode::get_count() const noexcept
 {
-    return code_count;
+    return opcode.size()-1;
 }
 
 void GenerateCode::gencode(opcode_type type)

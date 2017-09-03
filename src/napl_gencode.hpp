@@ -8,9 +8,8 @@ class GenerateCode
 
         std::vector<vm_opcode> opcode;
 
-        int code_count;
-
         std::string get_dump_tree_str(node_t *);
+        
         void dump_tree(std::string,int);
 
     public:
@@ -20,6 +19,8 @@ class GenerateCode
         int get_count()const noexcept;
 
         void gencode_tree(node_t *);
+
+        void backpatch(int,int);
 
         void gencode(opcode_type);
         void gencode(opcode_type,int);

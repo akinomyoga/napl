@@ -58,7 +58,9 @@ extern int yydebug;
     Mod = 268,
     True = 269,
     False = 270,
-    Print = 271
+    Print = 271,
+    If = 272,
+    Else = 273
   };
 #endif
 /* Tokens.  */
@@ -76,6 +78,8 @@ extern int yydebug;
 #define True 269
 #define False 270
 #define Print 271
+#define If 272
+#define Else 273
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -96,7 +100,7 @@ union YYSTYPE
 
     variable_type type;
 
-#line 100 "y.tab.h" /* yacc.c:1909  */
+#line 104 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

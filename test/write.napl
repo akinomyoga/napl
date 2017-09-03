@@ -1,6 +1,5 @@
 int a
-a=2
+a=2*4
 int b
-b=3
-print a
+b=a*3
 print b
