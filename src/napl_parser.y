@@ -112,22 +112,25 @@ block : '{' statement_list '}'
       ;
 
 if_statement_list : if_statement {genc.backpatch($<Int>1,genc.get_count());}
-                  | if_statement else_statement
+                  | if_statement Else {
+                                            genc.gencode(opcode_type::JUMP,-1);
+                                            $<Int>$=genc.get_count();    
+                                            genc.backpatch($<Int>1,genc.get_count());
+                                      }
+
+                    block           {
+                                        genc.backpatch($<Int>3,genc.get_count());
+                                    }
                   ;
 
-if_statement : If expr 
-                        {
+if_statement : If expr  {
                             genc.gencode_tree($<node>2);
                             genc.gencode(opcode_type::JUMP_NOT,-1);
                             $<Int>$=genc.get_count();
                         }
-               block    {
-                            $$=$<Int>3;
-                        }
-             ;
 
-else_statement : Else block
-               ;
+               block    {$$=$<Int>3;}
+             ;
 
 define_variable : Type Id {define_var($<type>1,$<Str>2);}
                 ;
