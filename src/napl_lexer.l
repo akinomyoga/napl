@@ -64,7 +64,7 @@ other .
                 return Type;
             }
 
-"double"    {
+"float"    {
                 yylval.type=variable_type::FLOAT;
                 return Type;
             }

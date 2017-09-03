@@ -1,0 +1,9 @@
+string str="abc"
+int i_value=114
+float f_value=5.14
+bool b_value=true
+
+print str+"\n"
+print i_value
+print f_value
+print b_value

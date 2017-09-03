@@ -292,6 +292,16 @@ void NaplVM::add()
 
             break;
         }
+        case stack_type::STRING:
+        {
+            std::string value_1=pop().s_value;
+
+            result_stack.type=stack_type::STRING;
+
+            result_stack.s_value=pop().s_value+value_1;
+
+            break;
+        }
         
         default: error("不正な値に対して演算が行われました");
     }
