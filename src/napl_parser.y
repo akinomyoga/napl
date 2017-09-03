@@ -133,10 +133,13 @@ if_statement : If expr  {
              ;
 
 define_variable : Type Id {define_var($<type>1,$<Str>2);}
+                | Type Id '=' expr {
+                                        define_var($<type>1,$<Str>2);
+                                        genc.gencode_tree(assign_var($<Str>2,$<node>4));
+                                   }
                 ;
 
-assign_variable : Id '=' expr   
-                                {
+assign_variable : Id '=' expr   {
                                     if(scope_count==0)
                                         $$=assign_var($<Str>1,$<node>3);
                                 }

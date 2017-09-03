@@ -1,6 +1,6 @@
 #include "napl.hpp"
 
-#define VM_CODE_DEBUG
+//#define VM_CODE_DEBUG
 
 NaplVM::NaplVM(std::vector<vm_opcode>& opcode)
 {

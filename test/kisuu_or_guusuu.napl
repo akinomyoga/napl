@@ -1,0 +1,3 @@
+int a=3
+if a%2==0 print "偶数だよ\n"
+else	  print "奇数じゃね？\n"

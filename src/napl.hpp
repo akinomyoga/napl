@@ -12,7 +12,7 @@
 #include <unordered_map>
 
 #define MEMORY_SIZE 10000
-#define DUMP_TREE
+//#define DUMP_TREE
 
 enum class opcode_type : int
 {
