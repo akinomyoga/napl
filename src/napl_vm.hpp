@@ -70,6 +70,8 @@ class NaplVM
         inline void greateq();
         inline void less();
         inline void lesseq();
+        inline void And();
+        inline void Or();
 
         inline void write_memory();
         inline void ref_memory();

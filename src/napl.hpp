@@ -25,7 +25,7 @@ enum class opcode_type : int
 
     JUMP,JUMP_NOT, //JUMP関連の命令
 
-    EQ,NOTEQ,GREAT,GREATEQ,LESS,LESSEQ, //比較命令
+    EQ,NOTEQ,GREAT,GREATEQ,LESS,LESSEQ,AND,OR, //比較命令
 
     WRITE_MEM, //メモリ書き込み命令
 

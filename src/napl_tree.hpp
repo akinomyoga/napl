@@ -15,6 +15,8 @@ enum class ast_type : int
     output,
 
     write_memory,ref_memory,
+
+    _or,_and,
 };
 
 struct node_t

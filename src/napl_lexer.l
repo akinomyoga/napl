@@ -11,7 +11,7 @@
 
 ws [ \n\t]
 digit [0-9]
-symbol [();:=]
+symbol [();:{\}=]
 letter [a-zA-Z_]
 id {letter}({letter}|{digit})*
 string \"([^\"\\\n]|\\.)*[\"\n]
@@ -59,6 +59,14 @@ other .
             return Com;
         }
 
+"&&"    {   
+            return And;
+        }
+
+"||"    {
+            return Or;
+        }
+
 "int"       {
                 yylval.type=variable_type::INT; 
                 return Type;
@@ -88,6 +96,8 @@ other .
 "if"        {return If;}
 
 "else"      {return Else;}
+
+"while"     {return While;}
 
 {id} {char* buf = new char[yyleng+1]; memset(buf,0,yyleng+1); strncpy(buf,yytext,yyleng+1); yylval.Str = buf; return Id;}
 

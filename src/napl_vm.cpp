@@ -47,6 +47,8 @@ void NaplVM::init_function_map()
     function_map[opcode_type::GREATEQ]=&NaplVM::greateq;
     function_map[opcode_type::LESS]=&NaplVM::less;
     function_map[opcode_type::LESSEQ]=&NaplVM::lesseq;
+    function_map[opcode_type::AND]=&NaplVM::And;
+    function_map[opcode_type::OR]=&NaplVM::Or;
     function_map[opcode_type::EXIT]=&NaplVM::exit_vm;
     function_map[opcode_type::WRITE_MEM]=&NaplVM::write_memory;
     function_map[opcode_type::REF_MEM]=&NaplVM::ref_memory;
@@ -86,6 +88,20 @@ inline void NaplVM::ref_memory()
         case stack_type::STRING: push(memory[addr].s_value); break;
         case stack_type::BOOL: push(memory[addr].b_value); break;
     }
+}
+
+inline void NaplVM::And()
+{
+    if(pop().b_value && pop().b_value)
+        push(true);
+    else push(false);
+}
+
+inline void NaplVM::Or()
+{
+    if(pop().b_value || pop().b_value)
+        push(true);
+    else push(false);
 }
 
 inline void NaplVM::eq()

@@ -53,10 +53,13 @@
 %token <Dbl> RNum
 %token <Str> Id String
 %token Add Sub Mul Div Mod
+%token And Or
 %token True False
 %token Print
 %token If Else
+%token While
 
+%left And Or
 %left Com
 %left Add Sub
 %left Mul Div Mod
@@ -97,7 +100,7 @@ global :
        | error '\n' {yyerrok;}
        ;
 
-statement_list : statement_list '\n' statement
+statement_list : statement_list statement
                | statement
                ;
 
@@ -105,11 +108,28 @@ statement : Print expr {genc.gencode_tree(make_node(ast_type::output,$<node>2,nu
           | define_variable
           | assign_variable {genc.gencode_tree($<node>1);}
           | if_statement_list
+          | while_statement
           ;
 
 block : '{' statement_list '}'
       | statement
       ;
+
+while_statement : While {
+                            $<Int>$=genc.get_count();
+                        } 
+
+                  expr  {
+                            genc.gencode_tree($<node>3);
+                            genc.gencode(opcode_type::JUMP_NOT,-1);
+                            $<Int>$=genc.get_count();
+                        }
+                  
+                  block {
+                            genc.gencode(opcode_type::JUMP,$<Int>2);
+                            genc.backpatch($<Int>4,genc.get_count()+1);
+                        }
+                ;
 
 if_statement_list : if_statement {genc.backpatch($<Int>1,genc.get_count());}
                   | if_statement Else {
@@ -150,6 +170,8 @@ expr : expr Add expr {$$=make_node(ast_type::add,$<node>1,$<node>3);}
      | expr Div expr {$$=make_node(ast_type::div,$<node>1,$<node>3);}
      | expr Mod expr {$$=make_node(ast_type::mod,$<node>1,$<node>3);}
      | expr Com expr {$$=make_node(translate_com($<op_type>2),$<node>1,$<node>3);}
+     | expr Or  expr {$$=make_node(ast_type::_or,$<node>1,$<node>3);}
+     | expr And expr {$$=make_node(ast_type::_and,$<node>1,$<node>3);}
      | '(' expr ')'  {$$=$<node>2;}
      | Num           {$$=make_atom(ast_type::int_value,$<Int>1);}
      | RNum          {$$=make_atom(ast_type::float_value,$<Dbl>1);}

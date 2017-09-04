@@ -56,11 +56,14 @@ extern int yydebug;
     Mul = 266,
     Div = 267,
     Mod = 268,
-    True = 269,
-    False = 270,
-    Print = 271,
-    If = 272,
-    Else = 273
+    And = 269,
+    Or = 270,
+    True = 271,
+    False = 272,
+    Print = 273,
+    If = 274,
+    Else = 275,
+    While = 276
   };
 #endif
 /* Tokens.  */
@@ -75,11 +78,14 @@ extern int yydebug;
 #define Mul 266
 #define Div 267
 #define Mod 268
-#define True 269
-#define False 270
-#define Print 271
-#define If 272
-#define Else 273
+#define And 269
+#define Or 270
+#define True 271
+#define False 272
+#define Print 273
+#define If 274
+#define Else 275
+#define While 276
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -100,7 +106,7 @@ union YYSTYPE
 
     variable_type type;
 
-#line 104 "y.tab.h" /* yacc.c:1909  */
+#line 110 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
